@@ -1,10 +1,40 @@
 package certificate
 
 import (
+	"context"
+	"github.com/pkg6/ssl-certificate/deployer"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"reflect"
 	"testing"
 )
+
+func TestDeployer(t *testing.T) {
+	type args struct {
+		config      *deployer.Config
+		ctx         context.Context
+		certificate *registrations.Certificate
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []string
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := Deployer(tt.args.config, tt.args.ctx, tt.args.certificate)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Deployer() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Deployer() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
 
 func TestSSLCertificate(t *testing.T) {
 	type args struct {

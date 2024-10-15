@@ -11,6 +11,15 @@ type Config struct {
 }
 
 type Options struct {
-	Domain string `json:"domain"`
-	Access any    `json:"access"`
+	Access any `json:"access"`
+}
+
+func MapNameAny(name string, access any) *Config {
+	if access == nil {
+		access = ""
+	}
+	return &Config{
+		Name:    name,
+		Options: &Options{Access: access},
+	}
 }
