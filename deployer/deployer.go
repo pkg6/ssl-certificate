@@ -33,6 +33,6 @@ func NewDeployer(cfg *Config) (IDeployer, error) {
 }
 
 type IDeployer interface {
-	Deploy(ctx context.Context, certificate registrations.Certificate) error
+	Deploy(ctx context.Context, certificate *registrations.Certificate) error
 	GetLogs() []string
 }

@@ -33,7 +33,7 @@ func (d *local) GetLogs() []string {
 	return d.logs
 }
 
-func (d *local) Deploy(ctx context.Context, certificate registrations.Certificate) error {
+func (d *local) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
 	access := &LocalAccess{}
 	if err := helper.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err

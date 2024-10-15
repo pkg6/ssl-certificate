@@ -1,8 +1,15 @@
 package certificate
 
 import (
+	"context"
+	"github.com/pkg6/ssl-certificate/deployer"
 	"github.com/pkg6/ssl-certificate/providers"
 	"github.com/pkg6/ssl-certificate/registrations"
+)
+
+const (
+	SSH   = "ssh"
+	Local = "local"
 )
 
 type Config struct {
@@ -31,4 +38,12 @@ func SSLCertificate(email string, domain []string, provider string, providerConf
 			Provider: registrations.LetsencryptSSL,
 		},
 	})
+}
+
+func Deployer(config *deployer.Config, ctx context.Context, certificate *registrations.Certificate) error {
+	dep, err := deployer.NewDeployer(config)
+	if err != nil {
+		return err
+	}
+	return dep.Deploy(ctx, certificate)
 }

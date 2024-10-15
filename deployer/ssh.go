@@ -38,7 +38,7 @@ func NewSSH(options *Options) (IDeployer, error) {
 func (d *sshd) GetLogs() []string {
 	return d.logs
 }
-func (d *sshd) Deploy(ctx context.Context, certificate registrations.Certificate) error {
+func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
 	access := &SSHAccess{}
 	if err := helper.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err
