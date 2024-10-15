@@ -1,7 +1,7 @@
 # Install
 
 ~~~
-go install github.com/pkg6/ssl-certificate/ssl-certificate@latest
+go install github.com/pkg6/ssl-certificate/cli/ssl-certificate@latest
 ~~~
 
 # Config
