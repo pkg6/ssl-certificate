@@ -32,6 +32,7 @@ func main() {
 		logs, err := certificate.Deployer(domain.DeployerConfig(cfg.Deploys), context.Background(), ssl)
 		if err != nil {
 			log.Fatalf("deploy err=%v", err)
+			return
 		}
 		for _, l := range logs {
 			log.Println(l)

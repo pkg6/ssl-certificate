@@ -36,12 +36,19 @@ func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, 
 	if email == "" {
 		email = helper.ID() + "@pkg6.com"
 	}
-	user := &User{Email: email}
-	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
-	if err != nil {
-		return user, nil, err
+	userFilaName := userFileName(email, regi, opt)
+	var (
+		user *User
+	)
+	user, _ = loadUserFromFile(userFilaName)
+	if user == nil {
+		user = &User{Email: email}
+		privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		if err != nil {
+			return user, nil, err
+		}
+		user.Key = privateKey
 	}
-	user.key = privateKey
 	config := lego.NewConfig(user)
 	config.CADirURL = regi.URL()
 	config.Certificate.KeyType = certcrypto.RSA2048
@@ -56,6 +63,7 @@ func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, 
 	if err != nil {
 		return user, nil, err
 	}
+	_ = saveUserData(userFilaName, user)
 	return user, client, nil
 }
 

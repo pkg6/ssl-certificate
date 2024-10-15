@@ -15,6 +15,10 @@ func ID() string {
 			s += macAddr
 		}
 	}
+	return MD5String(s)
+}
+
+func MD5String(s string) string {
 	hash := md5.New()
 	_, _ = io.WriteString(hash, s)
 	return hex.EncodeToString(hash.Sum(nil))
