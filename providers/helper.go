@@ -6,26 +6,6 @@ import (
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
-const (
-	Aliyun      = "aliyun"
-	Tencent     = "tencent"
-	Huaweicloud = "huaweicloud"
-	Cloudflare  = "cloudflare"
-	Godaddy     = "godaddy"
-	Http        = "http"
-)
-
-type Config struct {
-	Name   string
-	Config any
-}
-
-type Options struct {
-	Domains      []string              `json:"domain"`
-	Config       any                   `json:"config"`
-	Registration *registrations.Config `json:"registration"`
-}
-
 type IProvider interface {
 	Apply() (*registrations.Certificate, error)
 }
