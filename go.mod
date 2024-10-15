@@ -2,7 +2,11 @@ module github.com/pkg6/ssl-certificate
 
 go 1.22.0
 
-require github.com/go-acme/lego/v4 v4.19.2
+require (
+	github.com/go-acme/lego/v4 v4.19.2
+	github.com/pkg/sftp v1.13.6
+	golang.org/x/crypto v0.28.0
+)
 
 require (
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.15 // indirect
@@ -14,6 +18,7 @@ require (
 	github.com/huaweicloud/huaweicloud-sdk-go-v3 v0.1.114 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/kr/fs v0.1.0 // indirect
 	github.com/miekg/dns v1.1.62 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -22,12 +27,11 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.1002 // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
 	go.mongodb.org/mongo-driver v1.12.0 // indirect
-	golang.org/x/crypto v0.27.0 // indirect
 	golang.org/x/mod v0.21.0 // indirect
 	golang.org/x/net v0.29.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.25.0 // indirect
-	golang.org/x/text v0.18.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
 	golang.org/x/time v0.6.0 // indirect
 	golang.org/x/tools v0.25.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
