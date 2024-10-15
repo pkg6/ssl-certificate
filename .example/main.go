@@ -1,6 +1,3 @@
-# ssl-certificate
-
-~~~
 package main
 
 import (
@@ -36,4 +33,3 @@ func main() {
 	fmt.Printf("密钥：%s\n", ssl.PrivateKey)
 	fmt.Printf("CA证书：%s\n", ssl.IssuerCertificate)
 }
-~~~
