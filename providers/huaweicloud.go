@@ -25,10 +25,10 @@ func NewHuaweiCloud(option *Options) IProvider {
 
 func (t *huaweicloud) Apply() (*registrations.Certificate, error) {
 	access := &HuaweiCloudAccess{}
-	helper.JsonUnmarshal(t.option.Config, access)
-	os.Setenv("HUAWEICLOUD_REGION", access.Region)
-	os.Setenv("HUAWEICLOUD_ACCESS_KEY_ID", access.AccessKeyId)
-	os.Setenv("HUAWEICLOUD_SECRET_ACCESS_KEY", access.SecretAccessKey)
+	_ = helper.JsonUnmarshal(t.option.Config, access)
+	_ = os.Setenv("HUAWEICLOUD_REGION", access.Region)
+	_ = os.Setenv("HUAWEICLOUD_ACCESS_KEY_ID", access.AccessKeyId)
+	_ = os.Setenv("HUAWEICLOUD_SECRET_ACCESS_KEY", access.SecretAccessKey)
 	dnsProvider, err := huaweicloudProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err

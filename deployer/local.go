@@ -49,11 +49,11 @@ func (d *local) Deploy(ctx context.Context, certificate *registrations.Certifica
 	if err := d.copyFile(certificate.Certificate, access.CertPath); err != nil {
 		return fmt.Errorf("copy certificate failed: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 certificate upload successful")
+	d.logs = append(d.logs, "【local】 Successfully written certificate："+access.CertPath)
 	if err := d.copyFile(certificate.PrivateKey, access.KeyPath); err != nil {
 		return fmt.Errorf("copy private key failed: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 successfully uploaded private key")
+	d.logs = append(d.logs, "【local】 Successfully written private key："+access.KeyPath)
 	if access.AfterCommand != "" {
 		if err := d.execCmd(access.AfterCommand); err != nil {
 			return fmt.Errorf("failed to run after-command:: %w", err)

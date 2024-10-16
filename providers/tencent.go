@@ -23,9 +23,9 @@ func NewTencent(option *Options) IProvider {
 
 func (t *tencent) Apply() (*registrations.Certificate, error) {
 	access := &TencentAccess{}
-	helper.JsonUnmarshal(t.option.Config, access)
-	os.Setenv("TENCENTCLOUD_SECRET_ID", access.SecretId)
-	os.Setenv("TENCENTCLOUD_SECRET_KEY", access.SecretKey)
+	_ = helper.JsonUnmarshal(t.option.Config, access)
+	_ = os.Setenv("TENCENTCLOUD_SECRET_ID", access.SecretId)
+	_ = os.Setenv("TENCENTCLOUD_SECRET_KEY", access.SecretKey)
 	dnsProvider, err := tencentcloud.NewDNSProvider()
 	if err != nil {
 		return nil, err

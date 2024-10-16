@@ -24,7 +24,7 @@ type aliyunApply struct {
 
 func (a *aliyunApply) Apply() (*registrations.Certificate, error) {
 	access := &AliYunAccess{}
-	helper.JsonUnmarshal(a.option.Config, access)
+	_ = helper.JsonUnmarshal(a.option.Config, access)
 	_ = os.Setenv("ALICLOUD_ACCESS_KEY", access.AccessKeyId)
 	_ = os.Setenv("ALICLOUD_SECRET_KEY", access.AccessKeySecret)
 	dnsProvider, err := alidns.NewDNSProvider()

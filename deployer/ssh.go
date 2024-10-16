@@ -60,12 +60,12 @@ func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificat
 	if err := d.upload(client, certificate.Certificate, access.CertPath); err != nil {
 		return fmt.Errorf("failed to upload certificate: %w", err)
 	}
-	d.logs = append(d.logs, "【SSH】certificate upload successful")
+	d.logs = append(d.logs, "【local】 Successfully upload certificate："+access.KeyPath)
 	// 上传私钥
 	if err := d.upload(client, certificate.PrivateKey, access.KeyPath); err != nil {
 		return fmt.Errorf("failed to upload private key: %w", err)
 	}
-	d.logs = append(d.logs, "【SSH】successfully uploaded private key")
+	d.logs = append(d.logs, "【local】 Successfully upload private key："+access.KeyPath)
 	if access.AfterCommand != "" {
 		err, stdout, stderr := d.sshExecCommand(client, access.AfterCommand)
 		if err != nil {

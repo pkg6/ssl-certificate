@@ -6,9 +6,9 @@ import (
 )
 
 type Config struct {
-	Options     *RegisterOptions `json:"options" yaml:"options" xml:"options"`
-	Provider    string           `json:"provider" yaml:"provider" xml:"provider"`
 	Email       string           `json:"email" yaml:"email" xml:"email"`
+	Provider    string           `json:"provider" yaml:"provider" xml:"provider"`
+	Options     *RegisterOptions `json:"options" yaml:"options" xml:"options"`
 	Nameservers string           `json:"nameservers" yaml:"nameservers" xml:"nameservers"`
 }
 

@@ -21,8 +21,8 @@ func NewCloudflare(option *Options) IProvider {
 
 func (c *cloudflare) Apply() (*registrations.Certificate, error) {
 	access := &CloudflareAccess{}
-	helper.JsonUnmarshal(c.option.Config, access)
-	os.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)
+	_ = helper.JsonUnmarshal(c.option.Config, access)
+	_ = os.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)
 	provider, err := cloudflareProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err

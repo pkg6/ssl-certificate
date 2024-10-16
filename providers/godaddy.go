@@ -24,10 +24,10 @@ func NewGodaddy(option *Options) IProvider {
 func (a *godaddy) Apply() (*registrations.Certificate, error) {
 
 	access := &GodaddyAccess{}
-	helper.JsonUnmarshal(a.option.Config, access)
+	_ = helper.JsonUnmarshal(a.option.Config, access)
 
-	os.Setenv("GODADDY_API_KEY", access.ApiKey)
-	os.Setenv("GODADDY_API_SECRET", access.ApiSecret)
+	_ = os.Setenv("GODADDY_API_KEY", access.ApiKey)
+	_ = os.Setenv("GODADDY_API_SECRET", access.ApiSecret)
 
 	dnsProvider, err := godaddyProvider.NewDNSProvider()
 	if err != nil {

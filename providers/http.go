@@ -10,17 +10,17 @@ type HTTPAccess struct {
 	Path string `json:"path" yaml:"path" xml:"path"`
 }
 
-type HTTP struct {
+type http struct {
 	option *Options
 }
 
 func NewHTTP(option *Options) IProvider {
-	return &HTTP{
+	return &http{
 		option: option,
 	}
 }
 
-func (a *HTTP) Apply() (*registrations.Certificate, error) {
+func (a *http) Apply() (*registrations.Certificate, error) {
 	access := &HTTPAccess{}
 	helper.JsonUnmarshal(a.option.Config, access)
 	dnsProvider, err := webroot.NewHTTPProvider(access.Path)
