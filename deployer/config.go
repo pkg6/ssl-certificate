@@ -1,8 +1,12 @@
 package deployer
 
+import "github.com/pkg6/ssl-certificate/helper"
+
 const (
-	SSH   = "ssh"
-	Local = "local"
+	SSH       = "ssh"
+	Local     = "local"
+	OSS       = "oss"
+	ALiYunCDN = "aliyunCDN"
 )
 
 type Config struct {
@@ -12,6 +16,10 @@ type Config struct {
 
 type Options struct {
 	Access any `json:"access"`
+}
+
+func (o *Options) JsonUnmarshal(v any) error {
+	return helper.JsonUnmarshal(o, v)
 }
 
 func MapNameAny(name string, access any) *Config {

@@ -37,3 +37,17 @@ func main() {
 	fmt.Printf("CA证书：%s\n", ssl.IssuerCertificate)
 }
 ~~~
+
+nginx ssl 配置
+
+~~~
+listen 443 ssl;
+ssl_certificate /etc/nginx/ssl/ssl.zhiqiang.wang.cer;
+ssl_certificate_key /etc/nginx/ssl/ssl.zhiqiang.wang.key;
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+ssl_prefer_server_ciphers on;
+ssl_session_cache shared:SSL:10m;
+ssl_session_timeout 10m;
+~~~
+

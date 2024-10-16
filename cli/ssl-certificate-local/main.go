@@ -13,15 +13,17 @@ import (
 )
 
 var (
-	domain  string
-	webroot string
-	sslPath string
+	domain       string
+	webroot      string
+	sslPath      string
+	afterCommand string
 )
 
 func init() {
 	flag.StringVar(&domain, "domain", "", "Need to generate SSL domain names")
 	flag.StringVar(&webroot, "webroot", "", "Directory for domain deployment")
 	flag.StringVar(&sslPath, "path", "/etc/nginx/ssl/", "Directory for storing certificates")
+	flag.StringVar(&afterCommand, "command", "", "Execute commands after successful deployment")
 }
 func main() {
 	flag.Parse()
@@ -50,8 +52,8 @@ func main() {
 		Name: deployer.Local,
 		Options: &deployer.Options{
 			Access: &deployer.LocalAccess{
-				AfterCommand: "service nginx restart",
-				CertPath:     path.Join(sslPath, fmt.Sprintf("%s.crt", domain)),
+				AfterCommand: afterCommand,
+				CertPath:     path.Join(sslPath, fmt.Sprintf("%s.cer", domain)),
 				KeyPath:      path.Join(sslPath, fmt.Sprintf("%s.key", domain)),
 			},
 		},

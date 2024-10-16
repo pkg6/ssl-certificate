@@ -3,14 +3,27 @@ module github.com/pkg6/ssl-certificate
 go 1.22.0
 
 require (
+	github.com/alibabacloud-go/cdn-20180510/v5 v5.0.0
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.8
+	github.com/alibabacloud-go/tea v1.2.1
+	github.com/alibabacloud-go/tea-utils/v2 v2.0.5
+	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	github.com/go-acme/lego/v4 v4.19.2
 	github.com/pkg/sftp v1.13.6
 	golang.org/x/crypto v0.28.0
 )
 
 require (
+	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.4 // indirect
+	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
+	github.com/alibabacloud-go/endpoint-util v1.1.0 // indirect
+	github.com/alibabacloud-go/openapi-util v0.1.0 // indirect
+	github.com/alibabacloud-go/tea-utils v1.3.1 // indirect
+	github.com/alibabacloud-go/tea-xml v1.1.3 // indirect
 	github.com/aliyun/alibaba-cloud-sdk-go v1.63.15 // indirect
+	github.com/aliyun/credentials-go v1.3.1 // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
+	github.com/clbanning/mxj/v2 v2.5.5 // indirect
 	github.com/cloudflare/cloudflare-go v0.104.0 // indirect
 	github.com/go-jose/go-jose/v4 v4.0.4 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
