@@ -1,0 +1,11 @@
+# https://goreleaser.com/
+# Upload all files in the releases directory to GitHub releases
+builds:
+  - skip: true
+release:
+  github:
+    owner: pkg6
+    name: ssl-certificate
+  draft: false
+  extra_files:
+    - glob: ./releases/*

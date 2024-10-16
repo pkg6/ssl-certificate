@@ -1,0 +1,33 @@
+name: goreleaser
+
+on:
+  workflow_dispatch:
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ linux ]
+        arch: [ amd64, arm, arm64,386]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Build for ${{ matrix.os }}-${{ matrix.arch }}
+        run: make -f ./Makefile.compile GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }}
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v5
+        with:
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GPR_TOKEN }}

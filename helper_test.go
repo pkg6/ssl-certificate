@@ -36,6 +36,32 @@ func TestDeployer(t *testing.T) {
 	}
 }
 
+func TestDomainCertificates(t *testing.T) {
+	type args struct {
+		domain string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    []*CertificateInfo
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := DomainCertificates(tt.args.domain)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("DomainCertificates() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("DomainCertificates() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestSSLCertificate(t *testing.T) {
 	type args struct {
 		email          string

@@ -1,0 +1,36 @@
+# Project Name
+APP_NAME = ssl-certificate
+# Target system and architecture
+GOOS ?= linux
+GOARCH ?= amd64
+#git tag
+VERSION := $(shell git describe --tags --always)
+# Build Path
+BUILD_PATH := ./temp/$(GOOS)-$(GOARCH)
+
+#Determine whether it is a win system
+ifeq ($(GOOS), windows)
+    EXT := .exe
+else
+    EXT :=
+endif
+
+# Default target
+all: build-local package clean
+# Build Command
+build-local:
+	mkdir -p $(BUILD_PATH)
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $(BUILD_PATH)/ssl-certificate-local$(EXT) ./cli/ssl-certificate-local/main.go
+	cp LICENSE $(BUILD_PATH)
+	cp README.md $(BUILD_PATH)
+
+# Packaging command
+package:
+	mkdir -p ./releases/
+	tar -czvf ./releases/$(APP_NAME)_$(VERSION)-$(GOOS)-$(GOARCH).tar.gz -C $(BUILD_PATH) .
+
+# Clean up command
+clean:
+	rm -rf $(BUILD_PATH)
+
+.PHONY: all build package clean
