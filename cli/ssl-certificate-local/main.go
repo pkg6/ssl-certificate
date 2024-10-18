@@ -36,6 +36,10 @@ func main() {
 	if sslPath == "" {
 		log.Fatal("Need to set --path")
 	}
+	log.Infof("Your domain name is: `%s`", domain)
+	log.Infof("Your domain webroot is: `%s`", webroot)
+	log.Infof("Your certificate is stored in: `%s`", sslPath)
+	log.Infof("After successful deployment, command : `%s`", afterCommand)
 
 	ssl, err := certificate.SSLCertificateByConfig(&certificate.Config{
 		Domains:      []string{domain},
@@ -46,7 +50,7 @@ func main() {
 		},
 	})
 	if err != nil {
-		log.Fatal("Failed to generate SSL domain names")
+		log.Fatalf("Generate SSL Certificate err=`%v`", err)
 	}
 	logs, err := certificate.Deployer(&deployer.Config{
 		Name: deployer.Local,
@@ -59,7 +63,7 @@ func main() {
 		},
 	}, context.Background(), ssl)
 	if err != nil {
-		log.Fatalf("deploy err=%v", err)
+		log.Fatalf("Deploy err=%v", err)
 		return
 	}
 	for _, l := range logs {

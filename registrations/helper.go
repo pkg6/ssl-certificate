@@ -34,7 +34,7 @@ func GetRegistration(name string) (IRegistration, error) {
 
 func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, *lego.Client, error) {
 	if email == "" {
-		email = helper.ID() + "@pkg6.com"
+		email = helper.UUIDEmail()
 	}
 	userFilaName := userFileName(email, regi, opt)
 	var (

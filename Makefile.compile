@@ -16,11 +16,21 @@ else
 endif
 
 # Default target
-all: build-local package clean
+all: mkdir build build-local cp package clean
+
+mkdir:
+	mkdir -p $(BUILD_PATH)
+
+# Build Command
+build:
+	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $(BUILD_PATH)/ssl-certificate$(EXT) ./cli/ssl-certificate/main.go
+	cp ./cli/ssl-certificate/config.json $(BUILD_PATH)
+
 # Build Command
 build-local:
-	mkdir -p $(BUILD_PATH)
 	GOOS=$(GOOS) GOARCH=$(GOARCH) go build -o $(BUILD_PATH)/ssl-certificate-local$(EXT) ./cli/ssl-certificate-local/main.go
+
+cp:
 	cp LICENSE $(BUILD_PATH)
 	cp README.md $(BUILD_PATH)
 

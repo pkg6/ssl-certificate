@@ -33,7 +33,7 @@ type LegoUserData struct {
 }
 
 func userFileName(email string, regi IRegistration, opt *RegisterOptions) string {
-	return helper.TempDir(email + "-" + helper.MD5String(regi.URL()+regi.UserAgent()))
+	return helper.HomeDir("user-" + email + "-" + helper.MD5String(regi.URL()+regi.UserAgent()))
 }
 
 func saveUserData(fileName string, user *User) error {

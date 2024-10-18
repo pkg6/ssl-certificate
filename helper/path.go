@@ -8,11 +8,7 @@ import (
 	"path/filepath"
 )
 
-const WorkerPath = "ssl-certificate"
-
-func TempDir(file string) string {
-	return path.Join(os.TempDir(), WorkerPath, file)
-}
+const WorkerPath = ".ssl-certificate"
 
 func HomeDir(file string) string {
 	home, _ := os.UserHomeDir()
