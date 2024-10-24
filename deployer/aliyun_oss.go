@@ -41,8 +41,12 @@ func NewALiYunOSS(options *Options) (IDeployer, error) {
 }
 
 func (d *aLiYunOSS) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
+	domain := d.access.Domain
+	if domain == "" {
+		domain = certificate.Domain
+	}
 	err := d.client.PutBucketCnameWithCertificate(d.access.Bucket, oss.PutBucketCname{
-		Cname: d.access.Domain,
+		Cname: domain,
 		CertificateConfiguration: &oss.CertificateConfiguration{
 			Certificate: certificate.Certificate,
 			PrivateKey:  certificate.PrivateKey,
@@ -52,7 +56,7 @@ func (d *aLiYunOSS) Deploy(ctx context.Context, certificate *registrations.Certi
 	if err != nil {
 		return fmt.Errorf("deploy aliyun oss error: %w", err)
 	}
-	d.logs = append(d.logs, "【OSS】 Deployment successful")
+	d.logs = append(d.logs, AddLog(OSS, "Deployment successful", nil))
 	return nil
 }
 

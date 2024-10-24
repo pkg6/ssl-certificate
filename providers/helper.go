@@ -29,6 +29,10 @@ func NewProvider(cfg *Config, registration *registrations.Config, domains []stri
 		return NewGodaddy(option), nil
 	case Http:
 		return NewHTTP(option), nil
+	case AWS:
+		return NewAws(option), nil
+	case Powerdns:
+		return NewPowerdns(option), nil
 	default:
 		return nil, fmt.Errorf("unknown %s config provider", cfg.Name)
 	}

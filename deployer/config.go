@@ -3,10 +3,12 @@ package deployer
 import "github.com/pkg6/ssl-certificate/helper"
 
 const (
-	SSH       = "ssh"
-	Local     = "local"
-	OSS       = "oss"
-	ALiYunCDN = "aliyunCDN"
+	SSH        = "ssh"
+	Local      = "local"
+	OSS        = "oss"
+	ALiYunCDN  = "aliyunCDN"
+	ALiYunDCDN = "aliyunDCDN"
+	TencentCDN = "tencentCDN"
 )
 
 type Config struct {

@@ -48,31 +48,32 @@ func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificat
 		return err
 	}
 	defer client.Close()
-	d.logs = append(d.logs, "【SSH】connection successful")
+	d.logs = append(d.logs, AddLog(SSH, "connection successful", nil))
 	if access.BeforeCommand != "" {
 		err, stdout, stderr := d.sshExecCommand(client, access.BeforeCommand)
 		if err != nil {
 			return fmt.Errorf("failed to run before-command: %w, stdout: %s, stderr: %s", err, stdout, stderr)
 		}
-		d.logs = append(d.logs, "【SSH】before-command executed successfully")
+		d.logs = append(d.logs, AddLog(SSH, "before-command executed successfully", nil))
 	}
 	// 上传证书
 	if err := d.upload(client, certificate.Certificate, access.CertPath); err != nil {
 		return fmt.Errorf("failed to upload certificate: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 Successfully upload certificate："+access.KeyPath)
+	d.logs = append(d.logs, AddLog(SSH, "Successfully upload certificate："+access.CertPath, nil))
 	// 上传私钥
 	if err := d.upload(client, certificate.PrivateKey, access.KeyPath); err != nil {
 		return fmt.Errorf("failed to upload private key: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 Successfully upload private key："+access.KeyPath)
+	d.logs = append(d.logs, AddLog(SSH, "Successfully upload private key："+access.KeyPath, nil))
 	if access.AfterCommand != "" {
 		err, stdout, stderr := d.sshExecCommand(client, access.AfterCommand)
 		if err != nil {
 			return fmt.Errorf("failed to run command: %w, stdout: %s, stderr: %s", err, stdout, stderr)
 		}
-		d.logs = append(d.logs, "【SSH】after-command executed successfully")
+		d.logs = append(d.logs, AddLog(SSH, "after-command executed successfully", nil))
 	}
+	d.logs = append(d.logs, AddLog(Local, "Deployment successful", nil))
 	return nil
 }
 func (d *sshd) upload(client *ssh.Client, content, sshPath string) error {

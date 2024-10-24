@@ -43,23 +43,24 @@ func (d *local) Deploy(ctx context.Context, certificate *registrations.Certifica
 		if err != nil {
 			return fmt.Errorf("failed to run before-command: %w", err)
 		}
-		d.logs = append(d.logs, "【local】 before-command executed successfully")
+		d.logs = append(d.logs, AddLog(Local, "before-command executed successfully ", nil))
 	}
 	// 复制文件
 	if err := d.copyFile(certificate.Certificate, access.CertPath); err != nil {
 		return fmt.Errorf("copy certificate failed: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 Successfully written certificate："+access.CertPath)
+	d.logs = append(d.logs, AddLog(Local, "Successfully written certificate: "+access.CertPath, nil))
 	if err := d.copyFile(certificate.PrivateKey, access.KeyPath); err != nil {
 		return fmt.Errorf("copy private key failed: %w", err)
 	}
-	d.logs = append(d.logs, "【local】 Successfully written private key："+access.KeyPath)
+	d.logs = append(d.logs, AddLog(Local, "Successfully written private key: "+access.KeyPath, nil))
 	if access.AfterCommand != "" {
 		if err := d.execCmd(access.AfterCommand); err != nil {
 			return fmt.Errorf("failed to run after-command:: %w", err)
 		}
-		d.logs = append(d.logs, "【local】 after-command executed successfully")
+		d.logs = append(d.logs, AddLog(Local, "after-command executed successfully", nil))
 	}
+	d.logs = append(d.logs, AddLog(Local, "Deployment successful", nil))
 	return nil
 }
 func (d local) execCmd(command string) error {

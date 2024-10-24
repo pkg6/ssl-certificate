@@ -9,6 +9,8 @@ const (
 	Cloudflare  = "cloudflare"
 	Godaddy     = "godaddy"
 	Http        = "http"
+	AWS         = "aws"
+	Powerdns    = "powerdns"
 )
 
 type Config struct {

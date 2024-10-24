@@ -20,3 +20,11 @@ func JsonFileUnmarshal(file string, v any) error {
 	}
 	return json.Unmarshal(fileByte, v)
 }
+
+func JsonMarshal(v any) string {
+	respByte, err := json.Marshal(v)
+	if err != nil {
+		respByte = []byte("")
+	}
+	return string(respByte)
+}
