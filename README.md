@@ -1,5 +1,16 @@
 ## Using the Command Line
 
+### sh install or uninstall
+
+~~~
+apt install -y jq
+
+// install 
+curl -sSL https://raw.githubusercontent.com/pkg6/ssl-certificate/main/install.sh | bash
+// uinstall
+curl -sSL https://raw.githubusercontent.com/pkg6/ssl-certificate/main/uninstall.sh | bash
+~~~
+
 ### ssl-certificate-local
 
 ~~~

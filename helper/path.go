@@ -10,9 +10,9 @@ import (
 
 const WorkerPath = ".ssl-certificate"
 
-func HomeDir(file string) string {
+func HomeDataFile(file string) string {
 	home, _ := os.UserHomeDir()
-	return path.Join(home, WorkerPath, file)
+	return path.Join(home, WorkerPath, "data", file)
 }
 
 func ReadFromFile(filePath string, v any) error {
