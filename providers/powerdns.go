@@ -8,8 +8,8 @@ import (
 )
 
 type PDNSAccess struct {
-	ApiUrl string `json:"apiUrl"`
-	ApiKey string `json:"apiKey"`
+	ApiUrl string `json:"apiUrl" xml:"apiUrl" yaml:"apiUrl"`
+	ApiKey string `json:"apiKey" xml:"apiKey" yaml:"apiKey"`
 }
 
 type powerdns struct {
@@ -17,9 +17,7 @@ type powerdns struct {
 }
 
 func NewPowerdns(options *Options) IProvider {
-	return &powerdns{
-		options: options,
-	}
+	return &powerdns{options: options}
 }
 
 func (a *powerdns) Apply() (*registrations.Certificate, error) {

@@ -10,8 +10,8 @@ type IProvider interface {
 	Apply() (*registrations.Certificate, error)
 }
 
-func apply(option *Options, provider challenge.Provider) (*registrations.Certificate, error) {
-	return registrations.RegistrationByProvider(provider, option.Registration, option.Domains)
+func apply(options *Options, provider challenge.Provider) (*registrations.Certificate, error) {
+	return registrations.RegistrationByProvider(provider, options.Registration, options.Domains)
 }
 
 func NewProvider(cfg *Config, registration *registrations.Config, domains []string) (IProvider, error) {

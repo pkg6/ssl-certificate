@@ -9,11 +9,11 @@ import (
 )
 
 type ALiYunOSSAccess struct {
-	Endpoint        string `json:"endpoint"`
-	Bucket          string `json:"bucket"`
-	Domain          string `json:"domain"`
-	AccessKeyId     string `json:"accessKeyId"`
-	AccessKeySecret string `json:"accessKeySecret"`
+	Endpoint        string `json:"endpoint" xml:"endpoint" yaml:"endpoint"`
+	Bucket          string `json:"bucket" xml:"bucket" yaml:"bucket"`
+	Domain          string `json:"domain" xml:"domain" yaml:"domain"`
+	AccessKeyId     string `json:"accessKeyId" xml:"accessKeyId" yaml:"accessKeyId"`
+	AccessKeySecret string `json:"accessKeySecret" xml:"accessKeySecret" yaml:"accessKeySecret"`
 }
 
 type aLiYunOSS struct {

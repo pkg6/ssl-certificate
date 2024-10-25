@@ -17,7 +17,7 @@ type Config struct {
 }
 
 type Options struct {
-	Access any `json:"access"`
+	Access any `json:"access" xml:"Access" yaml:"access"`
 }
 
 func (o *Options) JsonUnmarshal(v any) error {

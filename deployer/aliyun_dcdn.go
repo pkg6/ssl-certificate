@@ -11,11 +11,11 @@ import (
 )
 
 type ALiYunDCDNAccess struct {
-	AccessKeyId     string `json:"accessKeyId"`
-	AccessKeySecret string `json:"accessKeySecret"`
-	Domain          string `json:"domain"`
-	Region          string `json:"region"`
-	Endpoint        string `json:"endpoint"`
+	AccessKeyId     string `json:"accessKeyId" xml:"accessKeyId" yaml:"accessKeyId"`
+	AccessKeySecret string `json:"accessKeySecret" xml:"accessKeySecret" yaml:"accessKeySecret"`
+	Domain          string `json:"domain" xml:"domain" yaml:"domain"`
+	Region          string `json:"region" xml:"region" yaml:"region"`
+	Endpoint        string `json:"endpoint" xml:"endpoint" yaml:"endpoint"`
 }
 type aLiYunDCDN struct {
 	options *Options

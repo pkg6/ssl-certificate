@@ -12,19 +12,17 @@ type GodaddyAccess struct {
 	ApiSecret string `json:"apiSecret" yaml:"apiSecret" xml:"apiSecret"`
 }
 type godaddy struct {
-	option *Options
+	options *Options `json:"option" xml:"options" yaml:"options"`
 }
 
-func NewGodaddy(option *Options) IProvider {
-	return &godaddy{
-		option: option,
-	}
+func NewGodaddy(options *Options) IProvider {
+	return &godaddy{options: options}
 }
 
 func (a *godaddy) Apply() (*registrations.Certificate, error) {
 
 	access := &GodaddyAccess{}
-	_ = helper.JsonUnmarshal(a.option.Config, access)
+	_ = helper.JsonUnmarshal(a.options.Config, access)
 
 	_ = os.Setenv("GODADDY_API_KEY", access.ApiKey)
 	_ = os.Setenv("GODADDY_API_SECRET", access.ApiSecret)
@@ -33,6 +31,5 @@ func (a *godaddy) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	return apply(a.option, dnsProvider)
+	return apply(a.options, dnsProvider)
 }

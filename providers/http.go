@@ -11,21 +11,19 @@ type HTTPAccess struct {
 }
 
 type http struct {
-	option *Options
+	options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewHTTP(option *Options) IProvider {
-	return &http{
-		option: option,
-	}
+	return &http{options: option}
 }
 
 func (a *http) Apply() (*registrations.Certificate, error) {
 	access := &HTTPAccess{}
-	helper.JsonUnmarshal(a.option.Config, access)
+	helper.JsonUnmarshal(a.options.Config, access)
 	dnsProvider, err := webroot.NewHTTPProvider(access.Path)
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.option, dnsProvider)
+	return apply(a.options, dnsProvider)
 }

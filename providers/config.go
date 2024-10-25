@@ -19,7 +19,7 @@ type Config struct {
 }
 
 type Options struct {
-	Domains      []string              `json:"domain"`
-	Config       any                   `json:"config"`
-	Registration *registrations.Config `json:"registration"`
+	Domains      []string              `json:"domain" xml:"domains" yaml:"domains"`
+	Config       any                   `json:"config" xml:"config" yaml:"config"`
+	Registration *registrations.Config `json:"registration" xml:"registration" yaml:"registration"`
 }

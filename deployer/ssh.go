@@ -18,15 +18,15 @@ type sshd struct {
 }
 
 type SSHAccess struct {
-	Host          string `json:"host"`
-	Username      string `json:"username"`
-	Password      string `json:"password"`
-	Key           string `json:"key"`
-	Port          string `json:"port"`
-	BeforeCommand string `json:"beforeCommand"`
-	AfterCommand  string `json:"afterCommand"`
-	CertPath      string `json:"certPath"`
-	KeyPath       string `json:"keyPath"`
+	Host          string `json:"host" xml:"host" yaml:"host"`
+	Username      string `json:"username" xml:"username" yaml:"username"`
+	Password      string `json:"password" xml:"password" yaml:"password"`
+	Key           string `json:"key" xml:"key" yaml:"key"`
+	Port          string `json:"port" xml:"port" yaml:"port"`
+	BeforeCommand string `json:"beforeCommand" xml:"beforeCommand" yaml:"beforeCommand"`
+	AfterCommand  string `json:"afterCommand" xml:"afterCommand" yaml:"afterCommand"`
+	CertPath      string `json:"certPath" xml:"certPath" yaml:"certPath"`
+	KeyPath       string `json:"keyPath" xml:"keyPath" yaml:"keyPath"`
 }
 
 func NewSSH(options *Options) (IDeployer, error) {

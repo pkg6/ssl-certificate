@@ -12,10 +12,10 @@ import (
 )
 
 type LocalAccess struct {
-	BeforeCommand string `json:"beforeCommand"`
-	AfterCommand  string `json:"afterCommand"`
-	CertPath      string `json:"certPath"`
-	KeyPath       string `json:"keyPath"`
+	BeforeCommand string `json:"beforeCommand" xml:"beforeCommand" yaml:"beforeCommand"`
+	AfterCommand  string `json:"afterCommand" xml:"afterCommand" yaml:"afterCommand"`
+	CertPath      string `json:"certPath" xml:"certPath" yaml:"certPath"`
+	KeyPath       string `json:"keyPath" xml:"keyPath" yaml:"keyPath"`
 }
 
 type local struct {

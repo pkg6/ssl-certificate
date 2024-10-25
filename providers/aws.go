@@ -8,10 +8,10 @@ import (
 )
 
 type AwsAccess struct {
-	Region          string `json:"region"`
-	AccessKeyId     string `json:"accessKeyId"`
-	SecretAccessKey string `json:"secretAccessKey"`
-	HostedZoneId    string `json:"hostedZoneId"`
+	Region          string `json:"region" xml:"region" yaml:"region"`
+	AccessKeyId     string `json:"accessKeyId" xml:"accessKeyId" yaml:"accessKeyId"`
+	SecretAccessKey string `json:"secretAccessKey" xml:"secretAccessKey" yaml:"secretAccessKey"`
+	HostedZoneId    string `json:"hostedZoneId" xml:"hostedZoneId" yaml:"hostedZoneId"`
 }
 
 type aws struct {

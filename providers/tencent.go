@@ -12,23 +12,21 @@ type TencentAccess struct {
 	SecretKey string `json:"secretKey" yaml:"secretKey" xml:"secretKey"`
 }
 type tencent struct {
-	option *Options
+	options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
-func NewTencent(option *Options) IProvider {
-	return &tencent{
-		option: option,
-	}
+func NewTencent(options *Options) IProvider {
+	return &tencent{options: options}
 }
 
 func (t *tencent) Apply() (*registrations.Certificate, error) {
 	access := &TencentAccess{}
-	_ = helper.JsonUnmarshal(t.option.Config, access)
+	_ = helper.JsonUnmarshal(t.options.Config, access)
 	_ = os.Setenv("TENCENTCLOUD_SECRET_ID", access.SecretId)
 	_ = os.Setenv("TENCENTCLOUD_SECRET_KEY", access.SecretKey)
 	dnsProvider, err := tencentcloud.NewDNSProvider()
 	if err != nil {
 		return nil, err
 	}
-	return apply(t.option, dnsProvider)
+	return apply(t.options, dnsProvider)
 }
