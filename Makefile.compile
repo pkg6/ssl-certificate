@@ -1,5 +1,5 @@
 # Project Name
-APP_NAME = ssl-certificate
+APP_NAME := ssl-certificate
 # Target system and architecture
 GOOS ?= $(shell go env GOHOSTOS)
 GOARCH ?= $(shell go env GOHOSTARCH)

@@ -5,6 +5,7 @@ gh_user="pkg6"
 gh_repos="ssl-certificate"
 worker_path=${HOME}/.ssl-certificate
 ssl_certificate_commands=("ssl-certificate" "ssl-certificate-local")
+env_content='export PATH="${HOME}/.ssl-certificate/bin:$PATH"'
 
 # Function: Get the current system architecture
 function liunx_arch() {
@@ -79,22 +80,19 @@ done
 
 # Set environment variables
 echo "[3/3] Set environment variables"
+# Check for bash
 if [ -x "$(command -v bash)" ]; then
-    cat >>${HOME}/.bashrc <<-'EOF'
-
-export PATH="${HOME}/.ssl-certificate/bin:$PATH"
-
-	EOF
+    if ! grep -qF "${env_content}" "${HOME}/.bashrc"; then
+        echo "${env_content}" >> "${HOME}/.bashrc"
+    fi
 fi
 
+# Check for zsh
 if [ -x "$(command -v zsh)" ]; then
-    cat >>${HOME}/.zshrc <<-'EOF'
-
-export PATH="${HOME}/.ssl-certificate/bin:$PATH"
-
-	EOF
+    if ! grep -qF "${env_content}" "${HOME}/.zshrc"; then
+        echo "${env_content}" >> "${HOME}/.zshrc"
+    fi
 fi
-
 
 echo "ssl-certificate Installation successful"
 
