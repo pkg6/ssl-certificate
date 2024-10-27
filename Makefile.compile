@@ -1,8 +1,8 @@
 # Project Name
 APP_NAME = ssl-certificate
 # Target system and architecture
-GOOS ?= linux
-GOARCH ?= amd64
+GOOS ?= $(shell go env GOHOSTOS)
+GOARCH ?= $(shell go env GOHOSTARCH)
 #git tag
 VERSION := $(shell git describe --tags --always)
 # Build Path

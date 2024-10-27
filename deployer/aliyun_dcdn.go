@@ -53,15 +53,17 @@ func (d *aLiYunDCDN) Deploy(ctx context.Context, certificate *registrations.Cert
 	if strings.HasPrefix(domain, "*") {
 		domain = strings.TrimPrefix(domain, "*")
 	}
-	resp, err := d.client.SetDcdnDomainSSLCertificateWithOptions(&dcdn20180115.SetDcdnDomainSSLCertificateRequest{
-		DomainName:  tea.String(domain),
-		CertName:    tea.String(domainUUID(domain)),
-		CertType:    tea.String("upload"),
-		SSLProtocol: tea.String("on"),
-		SSLPub:      tea.String(certificate.Certificate),
-		SSLPri:      tea.String(certificate.PrivateKey),
-		CertRegion:  tea.String(d.access.Region),
-	}, &util.RuntimeOptions{})
+	resp, err := d.
+		client.
+		SetDcdnDomainSSLCertificateWithOptions(&dcdn20180115.SetDcdnDomainSSLCertificateRequest{
+			DomainName:  tea.String(domain),
+			CertName:    tea.String(domainUUID(domain)),
+			CertType:    tea.String("upload"),
+			SSLProtocol: tea.String("on"),
+			SSLPub:      tea.String(certificate.Certificate),
+			SSLPri:      tea.String(certificate.PrivateKey),
+			CertRegion:  tea.String(d.access.Region),
+		}, &util.RuntimeOptions{})
 	if err != nil {
 		return err
 	}

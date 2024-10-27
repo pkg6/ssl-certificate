@@ -50,17 +50,17 @@ func (d *aLiYunCDN) Deploy(ctx context.Context, certificate *registrations.Certi
 	if domain == "" {
 		domain = certificate.Domain
 	}
-	setCdnDomainSSLCertificateRequest := &cdn20180510.SetCdnDomainSSLCertificateRequest{
-		DomainName:  tea.String(domain),
-		CertName:    tea.String(domainUUID(domain)),
-		CertType:    tea.String("upload"),
-		SSLProtocol: tea.String("on"),
-		SSLPub:      tea.String(certificate.Certificate),
-		SSLPri:      tea.String(certificate.PrivateKey),
-		CertRegion:  tea.String(d.access.Region),
-	}
-	runtime := &util.RuntimeOptions{}
-	resp, err := d.cdn20180510.SetCdnDomainSSLCertificateWithOptions(setCdnDomainSSLCertificateRequest, runtime)
+	resp, err := d.
+		cdn20180510.
+		SetCdnDomainSSLCertificateWithOptions(&cdn20180510.SetCdnDomainSSLCertificateRequest{
+			DomainName:  tea.String(domain),
+			CertName:    tea.String(domainUUID(domain)),
+			CertType:    tea.String("upload"),
+			SSLProtocol: tea.String("on"),
+			SSLPub:      tea.String(certificate.Certificate),
+			SSLPri:      tea.String(certificate.PrivateKey),
+			CertRegion:  tea.String(d.access.Region),
+		}, &util.RuntimeOptions{})
 	if err != nil {
 		return err
 	}

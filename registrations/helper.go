@@ -93,16 +93,7 @@ func RegistrationByProvider(provider challenge.Provider, registration *Config, d
 	if err != nil {
 		return nil, err
 	}
-	return &Certificate{
-		User:              user,
-		Domain:            cert.Domain,
-		CertUrl:           cert.CertURL,
-		CertStableUrl:     cert.CertStableURL,
-		PrivateKey:        string(cert.PrivateKey),
-		Certificate:       string(cert.Certificate),
-		IssuerCertificate: string(cert.IssuerCertificate),
-		Csr:               string(cert.CSR),
-	}, nil
+	return NewCertificateByResource(user, cert), nil
 }
 
 func UseDNSObtain(legoClient *lego.Client, provider challenge.Provider, domains []string, nameservers []string) (*certificate.Resource, error) {

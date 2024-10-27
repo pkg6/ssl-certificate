@@ -8,7 +8,6 @@ const (
 	OSS        = "oss"
 	ALiYunCDN  = "aliyunCDN"
 	ALiYunDCDN = "aliyunDCDN"
-	TencentCDN = "tencentCDN"
 )
 
 type Config struct {
