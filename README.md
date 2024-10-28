@@ -124,7 +124,7 @@ func main() {
 		//	Region:          "cn-hangzhou",
 		//	Domain:          "ssl.zhiqiang.wang",
 		//}},
-	}, context.Background(), &registrations.Certificate{})
+	}, context.Background(), ssl)
 	//---------------------deployer end-------------------------------
 
 	//---------------------Certificate Information start-------------------------------
