@@ -15,6 +15,9 @@ func apply(options *Options, provider challenge.Provider) (*registrations.Certif
 }
 
 func NewProvider(cfg *Config, registration *registrations.Config, domains []string) (IProvider, error) {
+	if cfg.Provider != nil {
+		return cfg.Provider, nil
+	}
 	option := &Options{Domains: domains, Config: cfg.Config, Registration: registration}
 	switch cfg.Name {
 	case Aliyun:

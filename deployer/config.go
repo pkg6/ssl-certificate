@@ -11,8 +11,9 @@ const (
 )
 
 type Config struct {
-	Name    string   `json:"name" xml:"name" yaml:"name"`
-	Options *Options `json:"options" xml:"options" yaml:"options"`
+	Name     string `json:"name" xml:"name" yaml:"name"`
+	Deployer IDeployer
+	Options  *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 type Options struct {

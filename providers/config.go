@@ -14,8 +14,9 @@ const (
 )
 
 type Config struct {
-	Name   string `json:"name" xml:"name" yaml:"name"`
-	Config any    `json:"config" xml:"config" yaml:"config"`
+	Name     string `json:"name" xml:"name" yaml:"name"`
+	Provider IProvider
+	Config   any `json:"config" xml:"config" yaml:"config"`
 }
 
 type Options struct {

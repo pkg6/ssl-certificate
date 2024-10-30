@@ -9,7 +9,7 @@ import (
 	"github.com/pkg6/ssl-certificate/registrations"
 	"golang.org/x/crypto/ssh"
 	"os"
-	"path"
+	"path/filepath"
 )
 
 type sshd struct {
@@ -82,7 +82,7 @@ func (d *sshd) upload(client *ssh.Client, content, sshPath string) error {
 		return fmt.Errorf("failed to create sftp client: %w", err)
 	}
 	defer sftpCli.Close()
-	if err := sftpCli.MkdirAll(path.Dir(sshPath)); err != nil {
+	if err := sftpCli.MkdirAll(filepath.Dir(sshPath)); err != nil {
 		return fmt.Errorf("failed to create remote directory: %w", err)
 	}
 	file, err := sftpCli.OpenFile(sshPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC)

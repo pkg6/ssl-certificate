@@ -10,6 +10,9 @@ import (
 )
 
 func NewDeployer(cfg *Config) (IDeployer, error) {
+	if cfg.Deployer != nil {
+		return cfg.Deployer, nil
+	}
 	switch cfg.Name {
 	case SSH:
 		return NewSSH(cfg.Options)
