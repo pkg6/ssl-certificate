@@ -3,14 +3,14 @@ package providers
 import "github.com/pkg6/ssl-certificate/registrations"
 
 const (
-	Aliyun      = "aliyun"
-	Tencent     = "tencent"
-	Huaweicloud = "huaweicloud"
-	Cloudflare  = "cloudflare"
-	Godaddy     = "godaddy"
-	Http        = "http"
-	AWS         = "aws"
-	Powerdns    = "powerdns"
+	NameALiYun     = "aliyun"
+	NameTencent    = "tencent"
+	NameHuawei     = "huawei"
+	NameCloudflare = "cloudflare"
+	NameGodaddy    = "godaddy"
+	NameHttp       = "http"
+	NameAWS        = "aws"
+	NamePowerdns   = "powerdns"
 )
 
 type Config struct {

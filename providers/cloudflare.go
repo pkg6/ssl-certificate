@@ -12,20 +12,20 @@ type CloudflareAccess struct {
 }
 
 type cloudflare struct {
-	options *Options `json:"option" xml:"option" yaml:"option"`
+	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewCloudflare(options *Options) IProvider {
-	return &cloudflare{options: options}
+	return &cloudflare{Options: options}
 }
 
 func (c *cloudflare) Apply() (*registrations.Certificate, error) {
 	access := &CloudflareAccess{}
-	_ = helper.JsonUnmarshal(c.options.Config, access)
+	_ = helper.JsonUnmarshal(c.Options.Config, access)
 	_ = os.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)
 	provider, err := cloudflareProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err
 	}
-	return apply(c.options, provider)
+	return apply(c.Options, provider)
 }

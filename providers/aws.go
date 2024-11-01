@@ -14,19 +14,17 @@ type AwsAccess struct {
 	HostedZoneId    string `json:"hostedZoneId" xml:"hostedZoneId" yaml:"hostedZoneId"`
 }
 
-type aws struct {
-	options *Options
+type AWS struct {
+	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewAws(options *Options) IProvider {
-	return &aws{
-		options: options,
-	}
+	return &AWS{Options: options}
 }
 
-func (t *aws) Apply() (*registrations.Certificate, error) {
+func (t *AWS) Apply() (*registrations.Certificate, error) {
 	access := &AwsAccess{}
-	_ = helper.JsonUnmarshal(t.options.Config, access)
+	_ = helper.JsonUnmarshal(t.Options.Config, access)
 	os.Setenv("AWS_REGION", access.Region)
 	os.Setenv("AWS_ACCESS_KEY_ID", access.AccessKeyId)
 	os.Setenv("AWS_SECRET_ACCESS_KEY", access.SecretAccessKey)
@@ -35,5 +33,5 @@ func (t *aws) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(t.options, dnsProvider)
+	return apply(t.Options, dnsProvider)
 }

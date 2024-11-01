@@ -10,20 +10,20 @@ type HTTPAccess struct {
 	Path string `json:"path" yaml:"path" xml:"path"`
 }
 
-type http struct {
-	options *Options `json:"options" xml:"options" yaml:"options"`
+type HTTP struct {
+	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewHTTP(option *Options) IProvider {
-	return &http{options: option}
+	return &HTTP{Options: option}
 }
 
-func (a *http) Apply() (*registrations.Certificate, error) {
+func (a *HTTP) Apply() (*registrations.Certificate, error) {
 	access := &HTTPAccess{}
-	helper.JsonUnmarshal(a.options.Config, access)
+	helper.JsonUnmarshal(a.Options.Config, access)
 	dnsProvider, err := webroot.NewHTTPProvider(access.Path)
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.options, dnsProvider)
+	return apply(a.Options, dnsProvider)
 }

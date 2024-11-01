@@ -13,17 +13,17 @@ type HuaweiCloudAccess struct {
 	SecretAccessKey string `json:"secretAccessKey" yaml:"secretAccessKey" xml:"secretAccessKey"`
 }
 
-type huaweicloud struct {
-	options *Options `json:"options" xml:"options" yaml:"options"`
+type HuaWei struct {
+	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewHuaweiCloud(options *Options) IProvider {
-	return &huaweicloud{options: options}
+	return &HuaWei{Options: options}
 }
 
-func (t *huaweicloud) Apply() (*registrations.Certificate, error) {
+func (t *HuaWei) Apply() (*registrations.Certificate, error) {
 	access := &HuaweiCloudAccess{}
-	_ = helper.JsonUnmarshal(t.options.Config, access)
+	_ = helper.JsonUnmarshal(t.Options.Config, access)
 	_ = os.Setenv("HUAWEICLOUD_REGION", access.Region)
 	_ = os.Setenv("HUAWEICLOUD_ACCESS_KEY_ID", access.AccessKeyId)
 	_ = os.Setenv("HUAWEICLOUD_SECRET_ACCESS_KEY", access.SecretAccessKey)
@@ -31,5 +31,5 @@ func (t *huaweicloud) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(t.options, dnsProvider)
+	return apply(t.Options, dnsProvider)
 }

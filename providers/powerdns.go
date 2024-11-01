@@ -12,22 +12,22 @@ type PDNSAccess struct {
 	ApiKey string `json:"apiKey" xml:"apiKey" yaml:"apiKey"`
 }
 
-type powerdns struct {
-	options *Options
+type Powerdns struct {
+	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewPowerdns(options *Options) IProvider {
-	return &powerdns{options: options}
+	return &Powerdns{Options: options}
 }
 
-func (a *powerdns) Apply() (*registrations.Certificate, error) {
+func (a *Powerdns) Apply() (*registrations.Certificate, error) {
 	access := &PDNSAccess{}
-	_ = helper.JsonUnmarshal(a.options.Config, access)
+	_ = helper.JsonUnmarshal(a.Options.Config, access)
 	os.Setenv("PDNS_API_URL", access.ApiUrl)
 	os.Setenv("PDNS_API_KEY", access.ApiKey)
 	dnsProvider, err := pdns.NewDNSProvider()
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.options, dnsProvider)
+	return apply(a.Options, dnsProvider)
 }

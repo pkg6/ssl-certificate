@@ -12,24 +12,24 @@ type AliYunAccess struct {
 	AccessKeySecret string `json:"accessKeySecret" xml:"accessKeySecret" yaml:"accessKeySecret"`
 }
 
-func NewAliyun(option *Options) IProvider {
-	return &aliyunApply{
-		option: option,
+func NewALiYun(option *Options) IProvider {
+	return &ALiYun{
+		Option: option,
 	}
 }
 
-type aliyunApply struct {
-	option *Options
+type ALiYun struct {
+	Option *Options `json:"option" xml:"option" yaml:"option"`
 }
 
-func (a *aliyunApply) Apply() (*registrations.Certificate, error) {
+func (a *ALiYun) Apply() (*registrations.Certificate, error) {
 	access := &AliYunAccess{}
-	_ = helper.JsonUnmarshal(a.option.Config, access)
+	_ = helper.JsonUnmarshal(a.Option.Config, access)
 	_ = os.Setenv("ALICLOUD_ACCESS_KEY", access.AccessKeyId)
 	_ = os.Setenv("ALICLOUD_SECRET_KEY", access.AccessKeySecret)
 	dnsProvider, err := alidns.NewDNSProvider()
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.option, dnsProvider)
+	return apply(a.Option, dnsProvider)
 }

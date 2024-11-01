@@ -20,21 +20,21 @@ func NewProvider(cfg *Config, registration *registrations.Config, domains []stri
 	}
 	option := &Options{Domains: domains, Config: cfg.Config, Registration: registration}
 	switch cfg.Name {
-	case Aliyun:
-		return NewAliyun(option), nil
-	case Tencent:
+	case NameALiYun:
+		return NewALiYun(option), nil
+	case NameTencent:
 		return NewTencent(option), nil
-	case Huaweicloud:
+	case NameHuawei:
 		return NewHuaweiCloud(option), nil
-	case Cloudflare:
+	case NameCloudflare:
 		return NewCloudflare(option), nil
-	case Godaddy:
+	case NameGodaddy:
 		return NewGodaddy(option), nil
-	case Http:
+	case NameHttp:
 		return NewHTTP(option), nil
-	case AWS:
+	case NameAWS:
 		return NewAws(option), nil
-	case Powerdns:
+	case NamePowerdns:
 		return NewPowerdns(option), nil
 	default:
 		return nil, fmt.Errorf("unknown %s config provider", cfg.Name)
