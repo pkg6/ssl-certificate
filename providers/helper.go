@@ -30,7 +30,7 @@ func NewProvider(cfg *Config, registration *registrations.Config, domains []stri
 		return NewCloudflare(option), nil
 	case NameGodaddy:
 		return NewGodaddy(option), nil
-	case NameHttp:
+	case NameHTTP:
 		return NewHTTP(option), nil
 	case NameAWS:
 		return NewAws(option), nil

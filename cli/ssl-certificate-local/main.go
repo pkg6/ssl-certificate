@@ -45,7 +45,7 @@ func main() {
 		Domains:      []string{domain},
 		Registration: &registrations.Config{},
 		Provider: &providers.Config{
-			Name:   providers.Http,
+			Name:   providers.NameHTTP,
 			Config: &providers.HTTPAccess{Path: webroot},
 		},
 	})

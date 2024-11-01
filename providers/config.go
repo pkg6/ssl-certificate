@@ -8,7 +8,7 @@ const (
 	NameHuawei     = "huawei"
 	NameCloudflare = "cloudflare"
 	NameGodaddy    = "godaddy"
-	NameHttp       = "http"
+	NameHTTP       = "http"
 	NameAWS        = "aws"
 	NamePowerdns   = "powerdns"
 )
