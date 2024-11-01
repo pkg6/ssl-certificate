@@ -34,14 +34,14 @@ type LegoUserData struct {
 }
 
 func userFileName(email string, regi IRegistration, opt *RegisterOptions) string {
-	return fmt.Sprintf("user-%s-%s",
+	return helper.HomeDataFile(fmt.Sprintf("user-%s-%s",
 		email,
 		helper.MD5String(strings.Join([]string{
 			regi.URL(),
 			regi.UserAgent(),
 			helper.JsonMarshal(opt),
 		}, "")),
-	)
+	))
 }
 
 func saveUserData(fileName string, user *User) error {
