@@ -4,7 +4,6 @@ import (
 	"github.com/go-acme/lego/v4/providers/dns/pdns"
 	"github.com/pkg6/ssl-certificate/helper"
 	"github.com/pkg6/ssl-certificate/registrations"
-	"os"
 )
 
 type PDNSAccess struct {
@@ -23,8 +22,9 @@ func NewPowerdns(options *Options) IProvider {
 func (a *Powerdns) Apply() (*registrations.Certificate, error) {
 	access := &PDNSAccess{}
 	_ = helper.JsonUnmarshal(a.Options.Config, access)
-	os.Setenv("PDNS_API_URL", access.ApiUrl)
-	os.Setenv("PDNS_API_KEY", access.ApiKey)
+	_ = helper.Setenv("PDNS_API_URL", access.ApiUrl)
+	_ = helper.Setenv("PDNS_API_KEY", access.ApiKey)
+	_ = helper.SetTimeOut("PDNS_PROPAGATION_TIMEOUT")
 	dnsProvider, err := pdns.NewDNSProvider()
 	if err != nil {
 		return nil, err

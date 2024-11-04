@@ -3,7 +3,10 @@ package providers
 import (
 	"fmt"
 	"github.com/go-acme/lego/v4/challenge"
+	"github.com/pkg6/ssl-certificate/helper"
 	"github.com/pkg6/ssl-certificate/registrations"
+	"strconv"
+	"strings"
 )
 
 type IProvider interface {
@@ -11,6 +14,13 @@ type IProvider interface {
 }
 
 func apply(options *Options, provider challenge.Provider) (*registrations.Certificate, error) {
+	//https://github.com/go-acme/lego/issues/1867
+	for _, domain := range options.Domains {
+		if strings.HasPrefix(domain, "*") {
+			_ = helper.Setenv("LEGO_DISABLE_CNAME_SUPPORT", strconv.FormatBool(true))
+			break
+		}
+	}
 	return registrations.RegistrationByProvider(provider, options.Registration, options.Domains)
 }
 
@@ -36,6 +46,8 @@ func NewProvider(cfg *Config, registration *registrations.Config, domains []stri
 		return NewAws(option), nil
 	case NamePowerdns:
 		return NewPowerdns(option), nil
+	case NameNamesilo:
+		return NewNameSilo(option), nil
 	default:
 		return nil, fmt.Errorf("unknown %s config provider", cfg.Name)
 	}

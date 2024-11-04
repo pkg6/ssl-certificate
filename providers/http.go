@@ -20,7 +20,7 @@ func NewHTTP(option *Options) IProvider {
 
 func (a *HTTP) Apply() (*registrations.Certificate, error) {
 	access := &HTTPAccess{}
-	helper.JsonUnmarshal(a.Options.Config, access)
+	_ = helper.JsonUnmarshal(a.Options.Config, access)
 	dnsProvider, err := webroot.NewHTTPProvider(access.Path)
 	if err != nil {
 		return nil, err

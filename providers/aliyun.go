@@ -4,7 +4,6 @@ import (
 	"github.com/go-acme/lego/v4/providers/dns/alidns"
 	"github.com/pkg6/ssl-certificate/helper"
 	"github.com/pkg6/ssl-certificate/registrations"
-	"os"
 )
 
 type AliYunAccess struct {
@@ -25,8 +24,9 @@ type ALiYun struct {
 func (a *ALiYun) Apply() (*registrations.Certificate, error) {
 	access := &AliYunAccess{}
 	_ = helper.JsonUnmarshal(a.Option.Config, access)
-	_ = os.Setenv("ALICLOUD_ACCESS_KEY", access.AccessKeyId)
-	_ = os.Setenv("ALICLOUD_SECRET_KEY", access.AccessKeySecret)
+	_ = helper.Setenv("ALICLOUD_ACCESS_KEY", access.AccessKeyId)
+	_ = helper.Setenv("ALICLOUD_SECRET_KEY", access.AccessKeySecret)
+	_ = helper.SetTimeOut("ALICLOUD_PROPAGATION_TIMEOUT")
 	dnsProvider, err := alidns.NewDNSProvider()
 	if err != nil {
 		return nil, err

@@ -11,6 +11,7 @@ const (
 	NameHTTP       = "http"
 	NameAWS        = "aws"
 	NamePowerdns   = "powerdns"
+	NameNamesilo   = "namesilo"
 )
 
 type Config struct {
