@@ -31,5 +31,5 @@ func (a *ALiYun) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.Option, dnsProvider)
+	return Apply(a.Option, dnsProvider)
 }

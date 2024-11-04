@@ -13,7 +13,7 @@ type IProvider interface {
 	Apply() (*registrations.Certificate, error)
 }
 
-func apply(options *Options, provider challenge.Provider) (*registrations.Certificate, error) {
+func Apply(options *Options, provider challenge.Provider) (*registrations.Certificate, error) {
 	//https://github.com/go-acme/lego/issues/1867
 	for _, domain := range options.Domains {
 		if strings.HasPrefix(domain, "*") {

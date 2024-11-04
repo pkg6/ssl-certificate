@@ -27,5 +27,5 @@ func (n *NameSilo) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(n.Options, dnsProvider)
+	return Apply(n.Options, dnsProvider)
 }

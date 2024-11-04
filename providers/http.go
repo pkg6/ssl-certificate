@@ -25,5 +25,5 @@ func (a *HTTP) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.Options, dnsProvider)
+	return Apply(a.Options, dnsProvider)
 }

@@ -29,5 +29,5 @@ func (a *Powerdns) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(a.Options, dnsProvider)
+	return Apply(a.Options, dnsProvider)
 }

@@ -27,5 +27,5 @@ func (c *cloudflare) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(c.Options, provider)
+	return Apply(c.Options, provider)
 }

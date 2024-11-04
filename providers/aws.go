@@ -33,5 +33,5 @@ func (t *AWS) Apply() (*registrations.Certificate, error) {
 	if err != nil {
 		return nil, err
 	}
-	return apply(t.Options, dnsProvider)
+	return Apply(t.Options, dnsProvider)
 }
