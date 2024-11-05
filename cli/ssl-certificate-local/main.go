@@ -40,19 +40,14 @@ func main() {
 	log.Infof("Your domain webroot is: `%s`", webroot)
 	log.Infof("Your certificate is stored in: `%s`", sslPath)
 	log.Infof("After successful deployment, command : `%s`", afterCommand)
-
-	ssl, err := certificate.SSLCertificateByConfig(&certificate.Config{
+	_ = certificate.SSLCertificateDeployer(context.Background(), &certificate.Config{
 		Domains:      []string{domain},
 		Registration: &registrations.Config{},
 		Provider: &providers.Config{
 			Name:   providers.NameHTTP,
 			Config: &providers.HTTPAccess{Path: webroot},
 		},
-	})
-	if err != nil {
-		log.Fatalf("Generate SSL Certificate err=`%v`", err)
-	}
-	logs, err := certificate.Deployer(&deployer.Config{
+	}, &deployer.Config{
 		Name: deployer.Local,
 		Options: &deployer.Options{
 			Access: &deployer.LocalAccess{
@@ -61,12 +56,5 @@ func main() {
 				KeyPath:      path.Join(sslPath, fmt.Sprintf("%s.key", domain)),
 			},
 		},
-	}, context.Background(), ssl)
-	if err != nil {
-		log.Fatalf("Deploy err=%v", err)
-		return
-	}
-	for _, l := range logs {
-		log.Println(l)
-	}
+	})
 }

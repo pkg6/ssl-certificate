@@ -10,8 +10,8 @@ import (
 
 func TestDeployer(t *testing.T) {
 	type args struct {
-		config      *deployer.Config
 		ctx         context.Context
+		config      *deployer.Config
 		certificate *registrations.Certificate
 	}
 	tests := []struct {
@@ -24,7 +24,7 @@ func TestDeployer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := Deployer(tt.args.config, tt.args.ctx, tt.args.certificate)
+			got, err := Deployer(tt.args.ctx, tt.args.config, tt.args.certificate)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Deployer() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -112,6 +112,28 @@ func TestSSLCertificateByConfig(t *testing.T) {
 			}
 			if !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("SSLCertificateByConfig() got = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestSSLCertificateDeployer(t *testing.T) {
+	type args struct {
+		ctx      context.Context
+		cfg      *Config
+		deployer *deployer.Config
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		// TODO: Add test cases.
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if err := SSLCertificateDeployer(tt.args.ctx, tt.args.cfg, tt.args.deployer); (err != nil) != tt.wantErr {
+				t.Errorf("SSLCertificateDeployer() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
 	}
