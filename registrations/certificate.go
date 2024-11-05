@@ -1,6 +1,11 @@
 package registrations
 
-import "github.com/go-acme/lego/v4/certificate"
+import (
+	"crypto/x509"
+	"encoding/pem"
+	"fmt"
+	"github.com/go-acme/lego/v4/certificate"
+)
 
 type Certificate struct {
 	User              *User  `json:"user" xml:"user"`
@@ -24,4 +29,28 @@ func NewCertificateByResource(user *User, cert *certificate.Resource) *Certifica
 		IssuerCertificate: string(cert.IssuerCertificate),
 		Csr:               string(cert.CSR),
 	}
+}
+
+func (c *Certificate) X509Certificate() (*x509.Certificate, error) {
+	block, _ := pem.Decode([]byte(c.Certificate))
+	if block == nil {
+		return nil, fmt.Errorf("failed to parse certificate PEM")
+	}
+	return x509.ParseCertificate(block.Bytes)
+}
+
+func (c *Certificate) X509PrivateKey() (any, error) {
+	block, _ := pem.Decode([]byte(c.PrivateKey))
+	if block == nil {
+		return nil, fmt.Errorf("failed to parse private key PEM")
+	}
+	// Check if it is an RSA private key
+	if block.Type == "RSA PRIVATE KEY" {
+		return x509.ParsePKCS1PrivateKey(block.Bytes)
+	}
+	// Check if it is an ECDSA private key
+	if block.Type == "EC PRIVATE KEY" {
+		return x509.ParseECPrivateKey(block.Bytes)
+	}
+	return nil, fmt.Errorf("unsupported private key type")
 }

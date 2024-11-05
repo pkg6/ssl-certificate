@@ -2,16 +2,10 @@ package certificate
 
 import (
 	"context"
-	"crypto/tls"
-	"crypto/x509"
-	"encoding/pem"
-	"fmt"
 	"github.com/go-acme/lego/v4/log"
 	"github.com/pkg6/ssl-certificate/deployer"
 	"github.com/pkg6/ssl-certificate/providers"
 	"github.com/pkg6/ssl-certificate/registrations"
-	"net/url"
-	"strings"
 )
 
 // SSLCertificateByConfig
@@ -51,40 +45,6 @@ func Deployer(ctx context.Context, config *deployer.Config, certificate *registr
 		return nil, err
 	}
 	return dep.GetLogs(), err
-}
-
-// DomainCertificates
-// Obtain domain certificate information
-func DomainCertificates(domain string) ([]*CertificateInfo, error) {
-	if strings.HasPrefix(domain, "https://") || strings.HasPrefix(domain, "http://") {
-		parse, err := url.Parse(domain)
-		if err != nil {
-			return nil, err
-		}
-		domain = parse.Host
-	}
-	dial, err := tls.Dial("tcp", fmt.Sprintf("%s:443", domain), nil)
-	if err != nil {
-		return nil, err
-	}
-	state := dial.ConnectionState()
-	var infos []*CertificateInfo
-	const blockType = "PUBLIC KEY"
-	for _, certificate := range state.PeerCertificates {
-		c := &CertificateInfo{
-			Subject:            certificate.Subject.String(),
-			Issuer:             certificate.Issuer.String(),
-			NotBefore:          certificate.NotBefore,
-			NotAfter:           certificate.NotAfter,
-			PublicKeyAlgorithm: certificate.PublicKeyAlgorithm,
-			Version:            certificate.Version,
-		}
-		pubKey, _ := x509.MarshalPKIXPublicKey(certificate.PublicKey)
-		pemBlock := &pem.Block{Type: blockType, Bytes: pubKey}
-		c.PublicKey = string(pem.EncodeToMemory(pemBlock))
-		infos = append(infos, c)
-	}
-	return infos, nil
 }
 
 // SSLCertificateDeployer

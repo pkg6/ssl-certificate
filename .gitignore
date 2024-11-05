@@ -27,3 +27,6 @@ go.work.sum
 /.idea
 /releases
 /temp
+*.cer
+*.key
+*.db
