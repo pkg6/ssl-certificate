@@ -2,7 +2,6 @@ package helper
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -12,7 +11,12 @@ const WorkerPath = ".ssl-certificate"
 
 func HomeDataFile(file string) string {
 	home, _ := os.UserHomeDir()
-	return path.Join(home, WorkerPath, "data", file)
+	workerPath := path.Join(home, WorkerPath, "data", file)
+	dir := filepath.Dir(workerPath)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		_ = os.MkdirAll(dir, os.ModePerm)
+	}
+	return workerPath
 }
 
 func ReadFromFile(filePath string, v any) error {
@@ -24,18 +28,5 @@ func ReadFromFile(filePath string, v any) error {
 }
 
 func WriteToFile(filePath string, content []byte) error {
-	// Get the directory part of the file path
-	dir := filepath.Dir(filePath)
-	// Check if the directory exists
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		err := os.MkdirAll(dir, os.ModePerm)
-		if err != nil {
-			return fmt.Errorf("failed to create directory: %v", err)
-		}
-	}
-	// Write content to the file
-	if err := os.WriteFile(filePath, content, 0644); err != nil {
-		return fmt.Errorf("failed to write to file: %v", err)
-	}
-	return nil
+	return os.WriteFile(filePath, content, 0644)
 }
