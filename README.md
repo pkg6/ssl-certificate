@@ -129,7 +129,7 @@ func main() {
 
 	//---------------------Certificate Information start-------------------------------
 	//Obtain domain certificate information
-	domainCertificates, err := certificate.DomainCertificates("ssl.zhiqiang.wang")
+	domainCertificates, err := certificate.SSLCertificateInfoByTCP("ssl.zhiqiang.wang")
 	if err != nil {
 		panic(err)
 	}
