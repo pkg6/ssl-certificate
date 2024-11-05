@@ -8,7 +8,8 @@ import (
 	"fmt"
 	"github.com/go-acme/lego/v4/registration"
 	"github.com/pkg6/ssl-certificate/helper"
-	"strings"
+	"net/url"
+	"path"
 )
 
 type User struct {
@@ -34,14 +35,10 @@ type LegoUserData struct {
 }
 
 func userFileName(email string, regi IRegistration, opt *RegisterOptions) string {
-	return helper.HomeDataFile(fmt.Sprintf("user-%s-%s",
-		email,
-		helper.MD5String(strings.Join([]string{
-			regi.URL(),
-			regi.UserAgent(),
-			helper.JsonMarshal(opt),
-		}, "")),
-	))
+	urlP, _ := url.Parse(regi.URL())
+	optByte, _ := json.Marshal(opt)
+	userPath := path.Join("user", urlP.Host, fmt.Sprintf("%s-%s", email, helper.MD5String(string(optByte))))
+	return helper.HomeDataFile(userPath)
 }
 
 func saveUserData(fileName string, user *User) error {
