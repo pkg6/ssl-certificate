@@ -5,7 +5,7 @@
 ~~~
 apt install -y jq
 
-// install 
+// install
 curl -sSL https://raw.githubusercontent.com/pkg6/ssl-certificate/main/install.sh | bash
 // uinstall
 curl -sSL https://raw.githubusercontent.com/pkg6/ssl-certificate/main/uninstall.sh | bash
@@ -58,15 +58,15 @@ func main() {
 	config := &certificate.Config{
 		Domains: []string{"ssl.zhiqiang.wang"},
 		Provider: &providers.Config{
-			Name: "aliyun",
-			Config: &providers.AliYunAccess{
-				AccessKeyId:     "****************",
-				AccessKeySecret: "****************",
-			},
-			//Name: "http",
-			//Config: &providers.HTTPAccess{
-			//	Path: "/data/wwwroot/ssl.zhiqiang.wang",
+			//Name: providers.NameALiYun,
+			//Config: &providers.AliYunAccess{
+			//	AccessKeyId:     "****************",
+			//	AccessKeySecret: "****************",
 			//},
+			Name: providers.NameHTTP,
+			Config: &providers.HTTPAccess{
+				Path: "/data/wwwroot/ssl.zhiqiang.wang",
+			},
 		},
 		Registration: &registrations.Config{
 			Provider: registrations.LetsencryptSSL,
@@ -146,6 +146,5 @@ func main() {
 	fmt.Printf("certificate NotAfter：%s\n", domainCertificate2.NotAfter)
 	//---------------------Certificate Information start-------------------------------
 }
-
 ~~~
 

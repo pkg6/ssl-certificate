@@ -71,7 +71,7 @@ curl -s -S -L --create-dirs -o "${tarfile}" "${download_url}"
 
 # decompression
 bin_path=${worker_path}/bin
-echo "[2/3] Install g to the ${bin_path}"
+echo "[2/3] Install ssl-certificate to the ${bin_path}"
 rm -rf ${bin_path}
 mkdir -p ${bin_path}
 tar -xz -f  "${tarfile}" -C "${bin_path}"
