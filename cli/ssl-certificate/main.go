@@ -25,18 +25,10 @@ func main() {
 		return
 	}
 	for _, domain := range cfg.Domains {
-		ssl, err := certificate.SSLCertificateByConfig(domain.Certificate)
-		if err != nil {
-			log.Fatalf("load ssl err=%v", err)
-			return
-		}
-		logs, err := certificate.Deployer(domain.DeployerConfig(cfg.Deploys), context.Background(), ssl)
+		err = certificate.SSLCertificateDeployer(context.Background(), domain.Certificate, domain.DeployerConfig(cfg.Deploys))
 		if err != nil {
 			log.Fatalf("deploy err=%v", err)
-			return
-		}
-		for _, l := range logs {
-			log.Println(l)
+			continue
 		}
 	}
 }
