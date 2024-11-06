@@ -3,7 +3,7 @@
 ### sh install or uninstall
 
 ~~~
-apt install -y jq
+curl -sSL https://raw.githubusercontent.com/pkg6/sh/main/install-pkg.sh | bash -s jq
 
 // install
 curl -sSL https://raw.githubusercontent.com/pkg6/ssl-certificate/main/install.sh | bash
