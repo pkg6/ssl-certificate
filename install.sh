@@ -63,6 +63,8 @@ version=$(gh_version)
 download_url=$(gh_url ${version} ${os} ${arch})
 tarfile=$(worker_tar_file ${version} ${os} ${arch})
 
+rm -rf ${worker_path}
+
 # download
 echo "[1/3] Downloading ${download_url}"
 curl -s -S -L --create-dirs -o "${tarfile}" "${download_url}"
