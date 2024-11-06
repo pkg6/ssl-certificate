@@ -82,7 +82,7 @@ func main() {
 	//---------------------generate end-------------------------------
 
 	//---------------------deployer start-------------------------------
-	certificate.Deployer(&deployer.Config{
+	certificate.Deployer(context.Background(), &deployer.Config{
 		//Name: deployer.Local,
 		//Options: &deployer.Options{Access: deployer.LocalAccess{
 		//	CertPath:     "/etc/nginx/etc/ssl.zhiqiang.wang.cer",
@@ -117,18 +117,18 @@ func main() {
 		//	Domain:          "ssl.zhiqiang.wang",
 		//}},
 		//Name: deployer.ALiYunDCDN,
-		//Options: &deployer.Options{Access: deployer.ALiYunDCDNAccess{
-		//	AccessKeyId:     "***********************",
-		//	AccessKeySecret: "***********************",
-		//	Endpoint:        "dcdn.aliyuncs.com",
-		//	Region:          "cn-hangzhou",
-		//	Domain:          "ssl.zhiqiang.wang",
-		//}},
-	}, context.Background(), ssl)
+		Options: &deployer.Options{Access: deployer.ALiYunDCDNAccess{
+			AccessKeyId:     "***********************",
+			AccessKeySecret: "***********************",
+			Endpoint:        "dcdn.aliyuncs.com",
+			Region:          "cn-hangzhou",
+			Domain:          "ssl.zhiqiang.wang",
+		}},
+	}, ssl)
 	//---------------------deployer end-------------------------------
 
 	//---------------------Certificate Information start-------------------------------
-	//Obtain domain certificate information
+	//Obtain certificate information through domain access
 	domainCertificates, err := certificate.SSLCertificateInfoByTCP("ssl.zhiqiang.wang")
 	if err != nil {
 		panic(err)
@@ -136,7 +136,16 @@ func main() {
 	domainCertificate := domainCertificates[0]
 	fmt.Printf("certificate NotBefore：%s\n", domainCertificate.NotBefore)
 	fmt.Printf("certificate NotAfter：%s\n", domainCertificate.NotAfter)
+
+	//Obtain certificate information through the content of the certificate file
+	domainCertificate2, err := certificate.SSLCertificateInfoByCer([]byte(ssl.Certificate))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("certificate NotBefore：%s\n", domainCertificate2.NotBefore)
+	fmt.Printf("certificate NotAfter：%s\n", domainCertificate2.NotAfter)
 	//---------------------Certificate Information start-------------------------------
 }
+
 ~~~
 
