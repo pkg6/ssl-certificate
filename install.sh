@@ -86,6 +86,7 @@ echo "[3/3] Set environment variables"
 if [ -x "$(command -v bash)" ]; then
     if ! grep -qF "${env_content}" "${HOME}/.bashrc"; then
         echo "${env_content}" >> "${HOME}/.bashrc"
+        source "${HOME}/.bashrc"
     fi
 fi
 
@@ -93,6 +94,7 @@ fi
 if [ -x "$(command -v zsh)" ]; then
     if ! grep -qF "${env_content}" "${HOME}/.zshrc"; then
         echo "${env_content}" >> "${HOME}/.zshrc"
+        source "${HOME}/.zshrc"
     fi
 fi
 
