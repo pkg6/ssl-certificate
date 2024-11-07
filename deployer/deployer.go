@@ -9,6 +9,17 @@ import (
 	"time"
 )
 
+func Run(ctx context.Context, config *Config, certificate *registrations.Certificate) ([]string, error) {
+	dep, err := NewDeployer(config)
+	if err != nil {
+		return nil, err
+	}
+	if err := dep.Deploy(ctx, certificate); err != nil {
+		return nil, err
+	}
+	return dep.GetLogs(), err
+}
+
 func NewDeployer(cfg *Config) (IDeployer, error) {
 	if cfg.Deployer != nil {
 		return cfg.Deployer, nil

@@ -37,14 +37,7 @@ func SSLCertificate(email string, domain []string, provider string, providerConf
 // Deployer
 // Deploy the certificate
 func Deployer(ctx context.Context, config *deployer.Config, certificate *registrations.Certificate) ([]string, error) {
-	dep, err := deployer.NewDeployer(config)
-	if err != nil {
-		return nil, err
-	}
-	if err := dep.Deploy(ctx, certificate); err != nil {
-		return nil, err
-	}
-	return dep.GetLogs(), err
+	return deployer.Run(ctx, config, certificate)
 }
 
 // SSLCertificateDeployer
