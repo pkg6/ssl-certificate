@@ -36,11 +36,11 @@ func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, 
 	if email == "" {
 		email = helper.UUIDEmail()
 	}
-	userFilaName := userFileName(email, regi, opt)
+	data := NewData(email, regi, opt)
 	var (
 		user *User
 	)
-	user, _ = loadUserFromFile(userFilaName)
+	user, _ = data.LoadUser()
 	if user == nil {
 		user = &User{Email: email}
 		privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
@@ -63,7 +63,7 @@ func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, 
 	if err != nil {
 		return user, nil, err
 	}
-	_ = saveUserData(userFilaName, user)
+	_ = data.SaveUser(user)
 	return user, client, nil
 }
 

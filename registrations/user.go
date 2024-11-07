@@ -2,14 +2,7 @@ package registrations
 
 import (
 	"crypto"
-	"crypto/ecdsa"
-	"crypto/x509"
-	"encoding/json"
-	"fmt"
 	"github.com/go-acme/lego/v4/registration"
-	"github.com/pkg6/ssl-certificate/helper"
-	"net/url"
-	"path"
 )
 
 type User struct {
@@ -32,42 +25,4 @@ type LegoUserData struct {
 	Email        string                 `json:"email"`
 	PrivateKey   string                 `json:"private_key"`
 	Registration *registration.Resource `json:"registration"`
-}
-
-func userFileName(email string, regi IRegistration, opt *RegisterOptions) string {
-	urlP, _ := url.Parse(regi.URL())
-	optByte, _ := json.Marshal(opt)
-	userPath := path.Join("user", urlP.Host, fmt.Sprintf("%s-%s", email, helper.MD5String(string(optByte))))
-	return helper.HomeDataFile(userPath)
-}
-
-func saveUserData(fileName string, user *User) error {
-	privateKeyBytes, err := x509.MarshalECPrivateKey(user.Key.(*ecdsa.PrivateKey))
-	if err != nil {
-		return fmt.Errorf("failed to marshal private key: %v", err)
-	}
-	userData := &LegoUserData{
-		Email:        user.Email,
-		PrivateKey:   string(privateKeyBytes),
-		Registration: user.Registration,
-	}
-	// 将用户数据序列化为 JSON 并写入文件
-	data, err := json.Marshal(userData)
-	if err != nil {
-		return fmt.Errorf("failed to marshal user data: %v", err)
-	}
-	return helper.WriteToFile(fileName, data)
-}
-
-// LoadUserFromFile loads the user data from a file
-func loadUserFromFile(filename string) (*User, error) {
-	var userData LegoUserData
-	if err := helper.ReadFromFile(filename, &userData); err != nil {
-		return nil, err
-	}
-	privateKey, err := x509.ParseECPrivateKey([]byte(userData.PrivateKey))
-	if err != nil {
-		return nil, err
-	}
-	return &User{Email: userData.Email, Key: privateKey, Registration: userData.Registration}, nil
 }
