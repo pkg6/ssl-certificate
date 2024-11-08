@@ -13,13 +13,13 @@ type Config struct {
 }
 
 type DomainsDeploysConfig struct {
-	Domains []*DomainDeployConfig `json:"domains"`
-	Deploys map[string]any        `json:"deploys"`
+	Domains []*DomainDeployConfig `json:"domains" xml:"domains" yaml:"domains"`
+	Deploys map[string]any        `json:"deploys" xml:"deploys" yaml:"deploys"`
 }
 
 type DomainDeployConfig struct {
-	Deploy      string  `json:"deploy"`
-	Certificate *Config `json:"certificate"`
+	Deploy      string  `json:"deploy" xml:"deploy" yaml:"deploy"`
+	Certificate *Config `json:"certificate" xml:"certificate" yaml:"certificate"`
 }
 
 func (d *DomainDeployConfig) DeployerConfig(deploys map[string]any) *deployer.Config {

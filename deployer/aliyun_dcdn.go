@@ -67,7 +67,7 @@ func (d *aLiYunDCDN) Deploy(ctx context.Context, certificate *registrations.Cert
 	if err != nil {
 		return err
 	}
-	d.logs = append(d.logs, AddLog(ALiYunDCDN, "Deployment successful", resp))
+	d.logs = append(d.logs, AddLog(NameALiYunDCDN, "Deployment successful", resp))
 	return nil
 }
 

@@ -58,7 +58,7 @@ func (d *aLiYunOSS) Deploy(ctx context.Context, certificate *registrations.Certi
 	if err != nil {
 		return fmt.Errorf("deploy aliyun oss error: %w", err)
 	}
-	d.logs = append(d.logs, AddLog(OSS, "Deployment successful", nil))
+	d.logs = append(d.logs, AddLog(NameOSS, "Deployment successful", nil))
 	return nil
 }
 

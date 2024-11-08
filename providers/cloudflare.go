@@ -10,15 +10,15 @@ type CloudflareAccess struct {
 	DnsApiToken string `json:"dnsApiToken" xml:"dnsApiToken" yaml:"dnsApiToken"`
 }
 
-type cloudflare struct {
+type Cloudflare struct {
 	Options *Options `json:"options" xml:"options" yaml:"options"`
 }
 
 func NewCloudflare(options *Options) IProvider {
-	return &cloudflare{Options: options}
+	return &Cloudflare{Options: options}
 }
 
-func (c *cloudflare) Apply() (*registrations.Certificate, error) {
+func (c *Cloudflare) Apply() (*registrations.Certificate, error) {
 	access := &CloudflareAccess{}
 	_ = helper.JsonUnmarshal(c.Options.Config, access)
 	_ = helper.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)

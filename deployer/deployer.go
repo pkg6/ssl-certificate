@@ -25,15 +25,15 @@ func NewDeployer(cfg *Config) (IDeployer, error) {
 		return cfg.Deployer, nil
 	}
 	switch cfg.Name {
-	case SSH:
+	case NameSSH:
 		return NewSSH(cfg.Options)
-	case Local:
+	case NameLocal:
 		return NewLocal(cfg.Options)
-	case OSS:
+	case NameOSS:
 		return NewALiYunOSS(cfg.Options)
-	case ALiYunCDN:
+	case NameALiYunCDN:
 		return NewALiYunCDN(cfg.Options)
-	case ALiYunDCDN:
+	case NameALiYunDCDN:
 		return NewALiYunDCDN(cfg.Options)
 	default:
 		return nil, fmt.Errorf("unknown deployer: %s", cfg.Name)

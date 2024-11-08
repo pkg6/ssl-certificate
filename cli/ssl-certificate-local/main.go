@@ -48,7 +48,7 @@ func main() {
 			Config: &providers.HTTPAccess{Path: webroot},
 		},
 	}, &deployer.Config{
-		Name: deployer.Local,
+		Name: deployer.NameLocal,
 		Options: &deployer.Options{
 			Access: &deployer.LocalAccess{
 				AfterCommand: afterCommand,
