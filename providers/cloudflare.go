@@ -2,7 +2,7 @@ package providers
 
 import (
 	cloudflareProvider "github.com/go-acme/lego/v4/providers/dns/cloudflare"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -20,9 +20,9 @@ func NewCloudflare(options *Options) IProvider {
 
 func (c *Cloudflare) Apply() (*registrations.Certificate, error) {
 	access := &CloudflareAccess{}
-	_ = helper.JsonUnmarshal(c.Options.Config, access)
-	_ = helper.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)
-	_ = helper.SetTimeOut("CLOUDFLARE_PROPAGATION_TIMEOUT")
+	_ = pkg.JsonUnmarshal(c.Options.Config, access)
+	_ = pkg.Setenv("CLOUDFLARE_DNS_API_TOKEN", access.DnsApiToken)
+	_ = pkg.SetTimeOut("CLOUDFLARE_PROPAGATION_TIMEOUT")
 	provider, err := cloudflareProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err

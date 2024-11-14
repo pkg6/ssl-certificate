@@ -5,20 +5,23 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
+	"github.com/pkg6/ssl-certificate/pkg/data"
 	"net/url"
 	"path"
 )
 
 type Data struct {
 	filename string
+	data     *data.LocalData[*LegoUserData]
 }
 
 func NewData(email string, regi IRegistration, opt *RegisterOptions) *Data {
 	urlP, _ := url.Parse(regi.URL())
 	optByte, _ := json.Marshal(opt)
-	userPath := path.Join("user", urlP.Host, fmt.Sprintf("%s-%s", email, helper.MD5String(string(optByte))))
-	return &Data{filename: helper.HomeDataFile(userPath)}
+	userPath := path.Join("user", urlP.Host, fmt.Sprintf("%s-%s", email, pkg.MD5String(string(optByte))))
+	filName := pkg.HomeDataFile(userPath)
+	return &Data{data: data.NewLocalData[*LegoUserData](filName)}
 }
 
 func (d *Data) SaveUser(user *User) error {
@@ -27,17 +30,12 @@ func (d *Data) SaveUser(user *User) error {
 		return fmt.Errorf("failed to marshal private key: %v", err)
 	}
 	userData := &LegoUserData{Email: user.Email, PrivateKey: string(privateKeyBytes), Registration: user.Registration}
-	// 将用户数据序列化为 JSON 并写入文件
-	data, err := json.Marshal(userData)
-	if err != nil {
-		return fmt.Errorf("failed to marshal user data: %v", err)
-	}
-	return helper.WriteToFile(d.filename, data)
+	return d.data.Save(userData)
 }
 
 func (d *Data) LoadUser() (*User, error) {
-	var userData LegoUserData
-	if err := helper.ReadFromFile(d.filename, &userData); err != nil {
+	userData, err := d.data.Load()
+	if err != nil {
 		return nil, err
 	}
 	privateKey, err := x509.ParseECPrivateKey([]byte(userData.PrivateKey))

@@ -2,7 +2,7 @@ package providers
 
 import (
 	"github.com/go-acme/lego/v4/providers/dns/route53"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -23,12 +23,12 @@ func NewAws(options *Options) IProvider {
 
 func (t *AWS) Apply() (*registrations.Certificate, error) {
 	access := &AwsAccess{}
-	_ = helper.JsonUnmarshal(t.Options.Config, access)
-	_ = helper.Setenv("AWS_REGION", access.Region)
-	_ = helper.Setenv("AWS_ACCESS_KEY_ID", access.AccessKeyId)
-	_ = helper.Setenv("AWS_SECRET_ACCESS_KEY", access.SecretAccessKey)
-	_ = helper.Setenv("AWS_HOSTED_ZONE_ID", access.HostedZoneId)
-	_ = helper.SetTimeOut("AWS_PROPAGATION_TIMEOUT")
+	_ = pkg.JsonUnmarshal(t.Options.Config, access)
+	_ = pkg.Setenv("AWS_REGION", access.Region)
+	_ = pkg.Setenv("AWS_ACCESS_KEY_ID", access.AccessKeyId)
+	_ = pkg.Setenv("AWS_SECRET_ACCESS_KEY", access.SecretAccessKey)
+	_ = pkg.Setenv("AWS_HOSTED_ZONE_ID", access.HostedZoneId)
+	_ = pkg.SetTimeOut("AWS_PROPAGATION_TIMEOUT")
 	dnsProvider, err := route53.NewDNSProvider()
 	if err != nil {
 		return nil, err

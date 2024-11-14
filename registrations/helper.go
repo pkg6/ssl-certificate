@@ -11,7 +11,7 @@ import (
 	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/lego"
 	"github.com/go-acme/lego/v4/providers/http/webroot"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"strings"
 )
 
@@ -34,7 +34,7 @@ func GetRegistration(name string) (IRegistration, error) {
 
 func LegoClient(email string, regi IRegistration, opt *RegisterOptions) (*User, *lego.Client, error) {
 	if email == "" {
-		email = helper.UUIDEmail()
+		email = pkg.UUIDEmail()
 	}
 	data := NewData(email, regi, opt)
 	var (

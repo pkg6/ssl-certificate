@@ -3,7 +3,7 @@ package providers
 import (
 	"fmt"
 	"github.com/go-acme/lego/v4/challenge"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"strconv"
 	"strings"
@@ -17,7 +17,7 @@ func Apply(options *Options, provider challenge.Provider) (*registrations.Certif
 	//https://github.com/go-acme/lego/issues/1867
 	for _, domain := range options.Domains {
 		if strings.HasPrefix(domain, "*") {
-			_ = helper.Setenv("LEGO_DISABLE_CNAME_SUPPORT", strconv.FormatBool(true))
+			_ = pkg.Setenv("LEGO_DISABLE_CNAME_SUPPORT", strconv.FormatBool(true))
 			break
 		}
 	}

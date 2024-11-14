@@ -3,7 +3,7 @@ package deployer
 import (
 	"context"
 	"fmt"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"os"
 	"os/exec"
@@ -35,7 +35,7 @@ func (d *local) GetLogs() []string {
 
 func (d *local) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
 	access := &LocalAccess{}
-	if err := helper.JsonUnmarshal(d.options.Access, access); err != nil {
+	if err := pkg.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err
 	}
 	if access.BeforeCommand != "" {

@@ -2,7 +2,7 @@ package providers
 
 import (
 	"github.com/go-acme/lego/v4/providers/dns/tencentcloud"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -20,10 +20,10 @@ func NewTencent(options *Options) IProvider {
 
 func (t *Tencent) Apply() (*registrations.Certificate, error) {
 	access := &TencentAccess{}
-	_ = helper.JsonUnmarshal(t.Options.Config, access)
-	_ = helper.Setenv("TENCENTCLOUD_SECRET_ID", access.SecretId)
-	_ = helper.Setenv("TENCENTCLOUD_SECRET_KEY", access.SecretKey)
-	_ = helper.SetTimeOut("TENCENTCLOUD_PROPAGATION_TIMEOUT")
+	_ = pkg.JsonUnmarshal(t.Options.Config, access)
+	_ = pkg.Setenv("TENCENTCLOUD_SECRET_ID", access.SecretId)
+	_ = pkg.Setenv("TENCENTCLOUD_SECRET_KEY", access.SecretKey)
+	_ = pkg.SetTimeOut("TENCENTCLOUD_PROPAGATION_TIMEOUT")
 	dnsProvider, err := tencentcloud.NewDNSProvider()
 	if err != nil {
 		return nil, err

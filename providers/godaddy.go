@@ -2,7 +2,7 @@ package providers
 
 import (
 	godaddyProvider "github.com/go-acme/lego/v4/providers/dns/godaddy"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -21,11 +21,11 @@ func NewGodaddy(options *Options) IProvider {
 func (a *Godaddy) Apply() (*registrations.Certificate, error) {
 
 	access := &GodaddyAccess{}
-	_ = helper.JsonUnmarshal(a.Options.Config, access)
+	_ = pkg.JsonUnmarshal(a.Options.Config, access)
 
-	_ = helper.Setenv("GODADDY_API_KEY", access.ApiKey)
-	_ = helper.Setenv("GODADDY_API_SECRET", access.ApiSecret)
-	_ = helper.SetTimeOut("GODADDY_PROPAGATION_TIMEOUT")
+	_ = pkg.Setenv("GODADDY_API_KEY", access.ApiKey)
+	_ = pkg.Setenv("GODADDY_API_SECRET", access.ApiSecret)
+	_ = pkg.SetTimeOut("GODADDY_PROPAGATION_TIMEOUT")
 	dnsProvider, err := godaddyProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err

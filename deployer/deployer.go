@@ -3,7 +3,7 @@ package deployer
 import (
 	"context"
 	"fmt"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"strings"
 	"time"
@@ -50,5 +50,5 @@ func domainUUID(domain string) string {
 }
 
 func AddLog(deployer string, log string, v any) string {
-	return strings.Join([]string{"【" + deployer + "】:", log, helper.JsonMarshal(v)}, " ")
+	return strings.Join([]string{"【" + deployer + "】:", log, pkg.JsonMarshal(v)}, " ")
 }

@@ -1,6 +1,6 @@
 package deployer
 
-import "github.com/pkg6/ssl-certificate/helper"
+import "github.com/pkg6/ssl-certificate/pkg"
 
 const (
 	NameSSH        = "ssh"
@@ -21,7 +21,7 @@ type Options struct {
 }
 
 func (o *Options) JsonUnmarshal(v any) error {
-	return helper.JsonUnmarshal(o, v)
+	return pkg.JsonUnmarshal(o, v)
 }
 
 func MapNameAny(name string, access any) *Config {

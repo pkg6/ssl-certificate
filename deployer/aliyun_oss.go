@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -26,7 +26,7 @@ type aLiYunOSS struct {
 
 func NewALiYunOSS(options *Options) (IDeployer, error) {
 	access := &ALiYunOSSAccess{}
-	_ = helper.JsonUnmarshal(options.Access, access)
+	_ = pkg.JsonUnmarshal(options.Access, access)
 	a := &aLiYunOSS{
 		options: options,
 		access:  access,

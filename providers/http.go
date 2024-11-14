@@ -2,7 +2,7 @@ package providers
 
 import (
 	"github.com/go-acme/lego/v4/providers/http/webroot"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -20,7 +20,7 @@ func NewHTTP(option *Options) IProvider {
 
 func (a *HTTP) Apply() (*registrations.Certificate, error) {
 	access := &HTTPAccess{}
-	_ = helper.JsonUnmarshal(a.Options.Config, access)
+	_ = pkg.JsonUnmarshal(a.Options.Config, access)
 	dnsProvider, err := webroot.NewHTTPProvider(access.Path)
 	if err != nil {
 		return nil, err

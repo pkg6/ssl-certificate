@@ -2,7 +2,7 @@ package providers
 
 import (
 	namesiloProvider "github.com/go-acme/lego/v4/providers/dns/namesilo"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 )
 
@@ -20,9 +20,9 @@ func NewNameSilo(options *Options) IProvider {
 
 func (n *NameSilo) Apply() (*registrations.Certificate, error) {
 	access := &NameSiloAccess{}
-	_ = helper.JsonUnmarshal(n.Options.Config, access)
-	_ = helper.Setenv("NAMESILO_API_KEY", access.ApiKey)
-	_ = helper.SetTimeOut("NAMESILO_PROPAGATION_TIMEOUT")
+	_ = pkg.JsonUnmarshal(n.Options.Config, access)
+	_ = pkg.Setenv("NAMESILO_API_KEY", access.ApiKey)
+	_ = pkg.SetTimeOut("NAMESILO_PROPAGATION_TIMEOUT")
 	dnsProvider, err := namesiloProvider.NewDNSProvider()
 	if err != nil {
 		return nil, err

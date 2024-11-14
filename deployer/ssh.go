@@ -5,7 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/pkg/sftp"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"golang.org/x/crypto/ssh"
 	"os"
@@ -40,7 +40,7 @@ func (d *sshd) GetLogs() []string {
 }
 func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
 	access := &SSHAccess{}
-	if err := helper.JsonUnmarshal(d.options.Access, access); err != nil {
+	if err := pkg.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err
 	}
 	client, err := d.sshClient(access)

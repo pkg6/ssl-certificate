@@ -5,7 +5,7 @@ import (
 	"flag"
 	"github.com/go-acme/lego/v4/log"
 	certificate "github.com/pkg6/ssl-certificate"
-	"github.com/pkg6/ssl-certificate/helper"
+	"github.com/pkg6/ssl-certificate/pkg"
 )
 
 var (
@@ -19,7 +19,7 @@ func init() {
 }
 func main() {
 	flag.Parse()
-	err = helper.JsonFileUnmarshal(file, &cfg)
+	err = pkg.JsonFileUnmarshal(file, &cfg)
 	if err != nil {
 		log.Fatalf("load config err=%v", err)
 		return
