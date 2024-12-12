@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
+	"golang.org/x/sync/errgroup"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -34,6 +35,9 @@ func (d *local) GetLogs() []string {
 }
 
 func (d *local) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
+	var (
+		wg errgroup.Group
+	)
 	access := &LocalAccess{}
 	if err := pkg.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err
@@ -45,15 +49,18 @@ func (d *local) Deploy(ctx context.Context, certificate *registrations.Certifica
 		}
 		d.logs = append(d.logs, AddLog(NameLocal, "before-command executed successfully ", nil))
 	}
-	// 复制文件
-	if err := d.copyFile(certificate.Certificate, access.CertPath); err != nil {
-		return fmt.Errorf("copy certificate failed: %w", err)
+	wg.Go(func() error {
+		return d.copyFile(certificate.Certificate, access.CertPath)
+	})
+	wg.Go(func() error {
+		return d.copyFile(certificate.PrivateKey, access.KeyPath)
+	})
+	if err := wg.Wait(); err != nil {
+		d.logs = append(d.logs, AddLog(NameLocal, fmt.Sprintf("Key pair writing failed: %v", err), nil))
+		return err
+	} else {
+		d.logs = append(d.logs, AddLog(NameLocal, "Key pair written successfully", nil))
 	}
-	d.logs = append(d.logs, AddLog(NameLocal, "Successfully written certificate: "+access.CertPath, nil))
-	if err := d.copyFile(certificate.PrivateKey, access.KeyPath); err != nil {
-		return fmt.Errorf("copy private key failed: %w", err)
-	}
-	d.logs = append(d.logs, AddLog(NameLocal, "Successfully written private key: "+access.KeyPath, nil))
 	if access.AfterCommand != "" {
 		if err := d.execCmd(access.AfterCommand); err != nil {
 			return fmt.Errorf("failed to run after-command:: %w", err)

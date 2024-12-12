@@ -8,6 +8,7 @@ import (
 	"github.com/pkg6/ssl-certificate/pkg"
 	"github.com/pkg6/ssl-certificate/registrations"
 	"golang.org/x/crypto/ssh"
+	"golang.org/x/sync/errgroup"
 	"os"
 	"path/filepath"
 )
@@ -39,6 +40,9 @@ func (d *sshd) GetLogs() []string {
 	return d.logs
 }
 func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificate) error {
+	var (
+		wg errgroup.Group
+	)
 	access := &SSHAccess{}
 	if err := pkg.JsonUnmarshal(d.options.Access, access); err != nil {
 		return err
@@ -56,16 +60,18 @@ func (d *sshd) Deploy(ctx context.Context, certificate *registrations.Certificat
 		}
 		d.logs = append(d.logs, AddLog(NameSSH, "before-command executed successfully", nil))
 	}
-	// 上传证书
-	if err := d.upload(client, certificate.Certificate, access.CertPath); err != nil {
-		return fmt.Errorf("failed to upload certificate: %w", err)
+	wg.Go(func() error {
+		return d.upload(client, certificate.Certificate, access.CertPath)
+	})
+	wg.Go(func() error {
+		return d.upload(client, certificate.PrivateKey, access.KeyPath)
+	})
+	if err := wg.Wait(); err != nil {
+		d.logs = append(d.logs, AddLog(NameLocal, fmt.Sprintf("Key pair writing failed: %v", err), nil))
+		return err
+	} else {
+		d.logs = append(d.logs, AddLog(NameLocal, "Key pair written successfully", nil))
 	}
-	d.logs = append(d.logs, AddLog(NameSSH, "Successfully upload certificate："+access.CertPath, nil))
-	// 上传私钥
-	if err := d.upload(client, certificate.PrivateKey, access.KeyPath); err != nil {
-		return fmt.Errorf("failed to upload private key: %w", err)
-	}
-	d.logs = append(d.logs, AddLog(NameSSH, "Successfully upload private key："+access.KeyPath, nil))
 	if access.AfterCommand != "" {
 		err, stdout, stderr := d.sshExecCommand(client, access.AfterCommand)
 		if err != nil {
